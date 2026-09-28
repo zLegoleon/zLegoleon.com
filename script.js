@@ -1,415 +1,468 @@
- /* =========================================================
-    ZLEGOLEON™ CENTRAL SITE SCRIPT
-    ========================================================= */
+/* =========================================================
+   ZLEGOLEON™ CENTRAL SITE SCRIPT
+   ========================================================= */
 
 
- /* ---------------------------------------------------------
-    SITE ROOT
-    Automatically figures out where the website lives.
+/* =========================================================
+   SITE ROOT
+   Automatically figures out where the website lives.
 
-    This means it works both for:
+   This means it works both for:
 
-    https://example.github.io/
+   https://example.github.io/
 
-    and:
+   and:
 
-    https://example.github.io/zLegoleon/
-    --------------------------------------------------------- */
+   https://example.github.io/zLegoleon/
+   ========================================================= */
 
- const SCRIPT_URL = document.currentScript.src;
+const SCRIPT_URL = document.currentScript.src;
 
- const SITE_ROOT = new URL("./", SCRIPT_URL).pathname;
+const SITE_ROOT = new URL("./", SCRIPT_URL).pathname;
 
 
- /* Make this available to other scripts/pages */
- window.siteUrl = function (path = "") {
-     return SITE_ROOT + path.replace(/^\/+/, "");
- };
+/* Make this available to other scripts/pages */
 
+window.siteUrl = function (path = "") {
 
- /* =========================================================
-    NAVIGATION CONFIGURATION
+    return SITE_ROOT + path.replace(/^\/+/, "");
 
-    ADD NEW SECTIONS HERE.
-    That's it.
-    ========================================================= */
+};
 
- const NAV_ITEMS = [
-     {
-         label: "Home",
-         path: ""
-     },
 
-     {
-         label: "Store",
-         path: "store/"
-     },
+/* =========================================================
+   NAVIGATION CONFIGURATION
 
-     {
-         label: "About",
-         path: "about/"
-     }
+   ADD NEW SECTIONS HERE.
+   That's it.
+   ========================================================= */
 
-     // Example future section:
-     //
-     // {
-     //     label: "Games",
-     //     path: "games/"
-     // }
- ];
+const NAV_ITEMS = [
 
+    {
+        label: "Home",
+        path: ""
+    },
 
- /* =========================================================
-    CURRENT PAGE
-    ========================================================= */
+    {
+        label: "Store",
+        path: "store/"
+    },
 
- function normalizePath(path) {
+    {
+        label: "Gallery",
+        path: "gallery/"
+    },
 
-     return path
-         .replace(SITE_ROOT, "")
-         .replace(/^\/+/, "")
-         .replace(/\/+$/, "");
+    {
+        label: "About",
+        path: "about/"
+    }
 
- }
+    // Example future section:
+    //
+    // {
+    //     label: "Games",
+    //     path: "games/"
+    // }
 
+];
 
- function isNavItemActive(item) {
 
-     const currentPath = normalizePath(
-         window.location.pathname
-     );
+/* =========================================================
+   CURRENT PAGE
+   ========================================================= */
 
-     const targetPath = item.path
-         .replace(/^\/+/, "")
-         .replace(/\/+$/, "");
+function normalizePath(path) {
 
+    return path
+        .replace(SITE_ROOT, "")
+        .replace(/^\/+/, "")
+        .replace(/\/+$/, "");
 
-     /* Homepage */
-     if (targetPath === "") {
-         return currentPath === "";
-     }
+}
 
 
-     /* Section pages and subpages */
-     return (
-         currentPath === targetPath ||
-         currentPath.startsWith(targetPath + "/")
-     );
- }
+function isNavItemActive(item) {
 
+    const currentPath = normalizePath(
+        window.location.pathname
+    );
 
- /* =========================================================
-    NAVIGATION
-    ========================================================= */
+    const targetPath = item.path
+        .replace(/^\/+/, "")
+        .replace(/\/+$/, "");
 
- function renderNavigation() {
 
-     const container = document.getElementById("site-nav");
+    /* Homepage */
 
-     if (!container) {
-         return;
-     }
+    if (targetPath === "") {
 
+        return currentPath === "";
 
-     const links = NAV_ITEMS.map(item => {
+    }
 
-         const active = isNavItemActive(item)
-             ? "active"
-             : "";
 
-         return `
-             <a
-                 href="${siteUrl(item.path)}"
-                 class="${active}"
-             >
-                 ${item.label}
-             </a>
-         `;
+    /* Section pages and subpages */
 
-     }).join("");
+    return (
+        currentPath === targetPath ||
+        currentPath.startsWith(targetPath + "/")
+    );
 
+}
 
-     container.innerHTML = `
 
-         <header class="navbar">
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
-             <div class="nav-container">
+function renderNavigation() {
 
-                 <a
-                     href="${siteUrl()}"
-                     class="logo"
-                 >
-                     zLegoleon<span>™</span>
-                 </a>
+    const container =
+        document.getElementById("site-nav");
 
 
-                 <div class="nav-right">
+    if (!container) {
+        return;
+    }
 
-                     <nav
-                         class="nav-links"
-                         id="navLinks"
-                     >
-                         ${links}
-                     </nav>
 
+    const links = NAV_ITEMS.map(item => {
 
-                     <a
-                         href="${siteUrl("cart/")}"
-                         class="cart-button"
-                         aria-label="Shopping cart"
-                     >
-                         🛒
-                         <span
-                             class="cart-count hidden"
-                             id="cartCount"
-                         >
-                             0
-                         </span>
-                     </a>
+        const active =
+            isNavItemActive(item)
+                ? "active"
+                : "";
 
 
-                     <button
-                         class="theme-button"
-                         id="themeButton"
-                         aria-label="Toggle theme"
-                     >
-                         ◐
-                     </button>
+        return `
+            <a
+                href="${siteUrl(item.path)}"
+                class="${active}"
+            >
+                ${item.label}
+            </a>
+        `;
 
+    }).join("");
 
-                     <button
-                         class="menu-button"
-                         id="menuButton"
-                         aria-label="Open navigation"
-                         aria-expanded="false"
-                     >
-                         ☰
-                     </button>
 
-                 </div>
+    container.innerHTML = `
 
-             </div>
+        <header class="navbar">
 
-         </header>
+            <div class="nav-container">
 
-     `;
- }
+                <a
+                    href="${siteUrl()}"
+                    class="logo"
+                >
+                    zLegoleon<span>™</span>
+                </a>
 
 
- /* =========================================================
-    FOOTER
-    ========================================================= */
+                <div class="nav-right">
 
- function renderFooter() {
+                    <nav
+                        class="nav-links"
+                        id="navLinks"
+                    >
+                        ${links}
+                    </nav>
 
-     const container = document.getElementById("site-footer");
 
-     if (!container) {
-         return;
-     }
+                    <a
+                        href="${siteUrl("cart/")}"
+                        class="cart-button"
+                        aria-label="Shopping cart"
+                    >
+                        🛒
 
+                        <span
+                            class="cart-count hidden"
+                            id="cartCount"
+                        >
+                            0
+                        </span>
+                    </a>
 
-     const links = NAV_ITEMS.map(item => {
 
-         return `
-             <a href="${siteUrl(item.path)}">
-                 ${item.label}
-             </a>
-         `;
+                    <button
+                        class="theme-button"
+                        id="themeButton"
+                        aria-label="Toggle theme"
+                    >
+                        ◐
+                    </button>
 
-     }).join("");
 
+                    <button
+                        class="menu-button"
+                        id="menuButton"
+                        aria-label="Open navigation"
+                        aria-expanded="false"
+                    >
+                        ☰
+                    </button>
 
-     container.innerHTML = `
+                </div>
 
-         <footer class="footer">
+            </div>
 
-             <div class="footer-container">
+        </header>
 
-                 <div class="footer-brand">
+    `;
 
-                     <div class="logo">
-                         zLegoleon<span>™</span>
-                     </div>
 
-                     <p>
-                         Products you probably don't need.
-                     </p>
+    /*
+     * The navbar has just been created.
+     *
+     * If store.js is loaded on this page,
+     * update the cart badge immediately.
+     *
+     * This makes the red (1) / (2) / etc.
+     * persist when navigating between pages.
+     */
 
-                     <p>
-                         © ${new Date().getFullYear()}
-                         zLegoleon™
-                     </p>
+    if (typeof updateCartCount === "function") {
 
-                 </div>
+        updateCartCount();
 
+    }
 
-                 <div class="footer-links">
+}
 
-                     ${links}
 
-                     <a href="${siteUrl("cart/")}">
-                         Cart
-                     </a>
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
-                 </div>
+function renderFooter() {
 
-             </div>
+    const container =
+        document.getElementById("site-footer");
 
-         </footer>
 
-     `;
- }
+    if (!container) {
+        return;
+    }
 
 
- /* =========================================================
-    THEME
-    ========================================================= */
+    const links = NAV_ITEMS.map(item => {
 
- const THEME_KEY = "zlegoleon-theme";
+        return `
+            <a href="${siteUrl(item.path)}">
+                ${item.label}
+            </a>
+        `;
 
+    }).join("");
 
- function setTheme(theme) {
 
-     if (theme === "light") {
+    container.innerHTML = `
 
-         document.body.classList.add("light");
+        <footer class="footer">
 
-         localStorage.setItem(
-             THEME_KEY,
-             "light"
-         );
+            <div class="footer-container">
 
-     } else {
+                <div class="footer-brand">
 
-         document.body.classList.remove("light");
+                    <div class="logo">
+                        zLegoleon<span>™</span>
+                    </div>
 
-         localStorage.setItem(
-             THEME_KEY,
-             "dark"
-         );
-     }
- }
+                    <p>
+                        Products you probably don't need.
+                    </p>
 
+                    <p>
+                        © ${new Date().getFullYear()}
+                        zLegoleon™
+                    </p>
 
- function loadTheme() {
+                </div>
 
-     const savedTheme =
-         localStorage.getItem(THEME_KEY);
 
+                <div class="footer-links">
 
-     if (savedTheme === "light") {
+                    ${links}
 
-         document.body.classList.add("light");
+                    <a href="${siteUrl("cart/")}">
+                        Cart
+                    </a>
 
-     } else {
+                </div>
 
-         document.body.classList.remove("light");
-     }
- }
+            </div>
 
+        </footer>
 
- function setupThemeButton() {
+    `;
 
-     const button =
-         document.getElementById("themeButton");
+}
 
 
-     if (!button) {
-         return;
-     }
+/* =========================================================
+   THEME
+   ========================================================= */
 
+const THEME_KEY = "zlegoleon-theme";
 
-     button.addEventListener("click", () => {
 
-         const isLight =
-             document.body.classList.contains("light");
+function setTheme(theme) {
 
+    if (theme === "light") {
 
-         setTheme(
-             isLight
-                 ? "dark"
-                 : "light"
-         );
+        document.body.classList.add("light");
 
-     });
- }
+        localStorage.setItem(
+            THEME_KEY,
+            "light"
+        );
 
+    }
 
- /* =========================================================
-    MOBILE MENU
-    ========================================================= */
+    else {
 
- function setupMobileMenu() {
+        document.body.classList.remove("light");
 
-     const button =
-         document.getElementById("menuButton");
+        localStorage.setItem(
+            THEME_KEY,
+            "dark"
+        );
 
-     const nav =
-         document.getElementById("navLinks");
+    }
 
+}
 
-     if (!button || !nav) {
-         return;
-     }
 
+function loadTheme() {
 
-     button.addEventListener("click", () => {
+    const savedTheme =
+        localStorage.getItem(THEME_KEY);
 
-         const open =
-             nav.classList.toggle("open");
 
+    if (savedTheme === "light") {
 
-         button.setAttribute(
-             "aria-expanded",
-             open
-         );
+        document.body.classList.add("light");
 
-         button.textContent =
-             open
-                 ? "✕"
-                 : "☰";
+    }
 
-     });
+    else {
 
+        document.body.classList.remove("light");
 
-     /* Close menu after clicking a link */
+    }
 
-     nav.querySelectorAll("a").forEach(link => {
+}
 
-         link.addEventListener("click", () => {
 
-             nav.classList.remove("open");
+function setupThemeButton() {
 
-             button.setAttribute(
-                 "aria-expanded",
-                 "false"
-             );
+    const button =
+        document.getElementById("themeButton");
 
-             button.textContent = "☰";
 
-         });
+    if (!button) {
+        return;
+    }
 
-     });
 
- }
+    button.addEventListener("click", () => {
 
+        const isLight =
+            document.body.classList.contains("light");
 
- /* =========================================================
-    INITIALIZATION
-    ========================================================= */
 
- document.addEventListener(
-     "DOMContentLoaded",
-     () => {
+        setTheme(
+            isLight
+                ? "dark"
+                : "light"
+        );
 
-         renderNavigation();
-         renderFooter();
+    });
 
-         loadTheme();
+}
 
-         setupThemeButton();
-         setupMobileMenu();
 
-     }
- );
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+function setupMobileMenu() {
+
+    const button =
+        document.getElementById("menuButton");
+
+    const nav =
+        document.getElementById("navLinks");
+
+
+    if (!button || !nav) {
+        return;
+    }
+
+
+    button.addEventListener("click", () => {
+
+        const open =
+            nav.classList.toggle("open");
+
+
+        button.setAttribute(
+            "aria-expanded",
+            open
+        );
+
+
+        button.textContent =
+            open
+                ? "✕"
+                : "☰";
+
+    });
+
+
+    /* Close menu after clicking a link */
+
+    nav.querySelectorAll("a").forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            nav.classList.remove("open");
+
+            button.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            button.textContent = "☰";
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        renderNavigation();
+
+        renderFooter();
+
+        loadTheme();
+
+        setupThemeButton();
+
+        setupMobileMenu();
+
+    }
+);

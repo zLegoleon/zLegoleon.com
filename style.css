@@ -1526,3 +1526,397 @@
     border: 0;
     border-radius: 6px;
 }
+
+/* =========================
+   Opening Hours
+   ========================= */
+
+.opening-hours {
+    max-width: 700px;
+    margin-top: 30px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-medium);
+    background: var(--surface);
+    overflow: hidden;
+}
+
+.hours-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 17px 22px;
+    border-bottom: 1px solid var(--border);
+}
+
+.hours-row:last-child {
+    border-bottom: none;
+}
+
+.hours-row span:first-child {
+    font-weight: 700;
+}
+
+.hours-row span:last-child {
+    color: var(--muted);
+}
+
+.opening-hours-note {
+    max-width: 700px;
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.opening-hours-note strong {
+    color: var(--text);
+}
+
+@media (max-width: 600px) {
+    .hours-row {
+        padding: 15px 17px;
+    }
+}
+
+.about-section {
+    margin-top: 20px;
+}
+
+.timezone-display {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+    padding: 9px 13px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface-light);
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.timezone-display strong {
+    color: var(--text);
+    font-weight: 700;
+}
+
+.timezone-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.timezone-change {
+    margin-left: 5px;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.timezone-change:hover {
+    color: var(--text);
+    border-color: var(--accent);
+}
+
+.timezone-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+}
+
+.timezone-modal.open {
+    display: flex;
+}
+
+.timezone-modal-content {
+    width: min(430px, 100%);
+
+    padding: 25px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-large);
+
+    background: var(--surface);
+
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+}
+
+.timezone-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.timezone-modal-header h3 {
+    font-size: 1.3rem;
+}
+
+.timezone-modal-header p {
+    color: var(--muted);
+}
+
+.timezone-modal-close {
+    width: 34px;
+    height: 34px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: var(--surface-light);
+    color: var(--text);
+
+    cursor: pointer;
+}
+
+#timezoneSelect {
+    width: 100%;
+    height: 44px;
+
+    margin: 20px 0 15px;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: var(--surface-light);
+    color: var(--text);
+
+    outline: none;
+}
+
+#timezoneSelect:focus {
+    border-color: var(--accent);
+}
+
+#saveTimezone {
+    width: 100%;
+}
+
+/* =========================================================
+   ABOUT — OPENING HOURS
+   ========================================================= */
+
+.about-section {
+    margin-top: 100px;
+}
+
+.timezone-display {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    margin-top: 18px;
+    padding: 9px 13px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--surface-light);
+    color: var(--muted);
+
+    font-size: 0.8rem;
+}
+
+.timezone-display strong {
+    color: var(--text);
+    font-weight: 700;
+}
+
+.timezone-dot {
+    width: 7px;
+    height: 7px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.timezone-change {
+    margin-left: 5px;
+
+    padding: 3px 9px;
+
+    border: 1px solid var(--border);
+    border-radius: 6px;
+
+    background: var(--surface);
+    color: var(--muted);
+
+    font-size: 0.75rem;
+
+    cursor: pointer;
+}
+
+.timezone-change:hover {
+    color: var(--text);
+    border-color: var(--accent);
+}
+
+
+/* =========================================================
+   TIMEZONE MODAL
+   ========================================================= */
+
+.timezone-modal {
+    position: fixed;
+    inset: 0;
+
+    z-index: 2000;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.7);
+
+    backdrop-filter: blur(8px);
+}
+
+.timezone-modal.open {
+    display: flex;
+}
+
+.timezone-modal-content {
+    width: min(430px, 100%);
+
+    padding: 25px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-large);
+
+    background: var(--surface);
+
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.4);
+}
+
+.timezone-modal-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.timezone-modal-header h3 {
+    font-size: 1.3rem;
+}
+
+.timezone-modal-content > p {
+    color: var(--muted);
+}
+
+.timezone-modal-close {
+    width: 34px;
+    height: 34px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: var(--surface-light);
+    color: var(--text);
+
+    cursor: pointer;
+}
+
+.timezone-modal-close:hover {
+    border-color: var(--accent);
+}
+
+#timezoneSelect {
+    width: 100%;
+    height: 44px;
+
+    margin: 20px 0 15px;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: var(--surface-light);
+    color: var(--text);
+
+    outline: none;
+}
+
+#timezoneSelect:focus {
+    border-color: var(--accent);
+}
+
+#saveTimezone {
+    width: 100%;
+}
+
+
+@media (max-width: 600px) {
+
+    .about-section {
+        margin-top: 75px;
+    }
+
+    .timezone-display {
+        border-radius: 12px;
+    }
+
+}
+
+.timezone-change {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid var(--border);
+    outline: 0;
+    box-shadow: none;
+
+    margin-left: 5px;
+    padding: 3px 8px;
+
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--muted);
+
+    font: inherit;
+    font-size: .75rem;
+    line-height: 1.2;
+
+    cursor: pointer;
+}
+
+.timezone-change:hover {
+    color: var(--text);
+    border-color: var(--accent);
+}
+
+.timezone-change:focus,
+.timezone-change:focus-visible,
+.timezone-change:active {
+    outline: 0;
+    box-shadow: none;
+}

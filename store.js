@@ -142,7 +142,7 @@ function getCartItemCount() {
 function updateCartCount() {
 
     const count =
-        getCartItemCount();
+        getCart();
 
 
     const cartCount =
@@ -156,11 +156,15 @@ function updateCartCount() {
     }
 
 
+    const itemCount =
+        getCartItemCount();
+
+
     cartCount.textContent =
-        count;
+        itemCount;
 
 
-    if (count > 0) {
+    if (itemCount > 0) {
 
         cartCount.style.display =
             "inline-flex";

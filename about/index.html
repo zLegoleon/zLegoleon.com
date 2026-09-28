@@ -22,11 +22,13 @@
 
 <body>
 
+
 <!-- Central navigation -->
 <div id="site-nav"></div>
 
 
 <main class="page">
+
 
     <a
             href="../"
@@ -35,6 +37,10 @@
         ← Home
     </a>
 
+
+    <!-- =========================
+         PAGE HEADER
+         ========================= -->
 
     <header class="page-header">
 
@@ -54,6 +60,10 @@
 
     </header>
 
+
+    <!-- =========================
+         ABOUT CARDS
+         ========================= -->
 
     <div class="about-grid">
 
@@ -119,16 +129,919 @@
 
     </div>
 
+
+    <!-- =========================
+         OPENING HOURS
+         ========================= -->
+
+    <section class="about-section">
+
+
+        <div class="about-section-header">
+
+            <h2>
+                Opening Hours
+            </h2>
+
+            <p>
+                Our regular operating hours are listed below.
+                Please note that availability may vary depending
+                on absolutely essential corporate circumstances.
+            </p>
+
+
+            <div class="timezone-display">
+
+                <span class="timezone-dot"></span>
+
+                <span>
+                    Current timezone:
+                </span>
+
+                <strong id="userTimezone">
+                    Detecting...
+                </strong>
+
+                <button
+                        type="button"
+                        class="timezone-change"
+                        id="changeTimezone"
+                >
+                    Change
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- JavaScript fills this -->
+        <div
+                class="opening-hours"
+                id="openingHours"
+        ></div>
+
+
+        <p class="opening-hours-note">
+
+            <strong>
+                Public holidays:
+            </strong>
+
+            Closed unless otherwise stated.
+
+            Emergency zLegoleon™ operations may occur
+            without prior notice.
+
+        </p>
+
+
+    </section>
+
+
 </main>
+
+
+<!-- =========================
+     TIMEZONE MODAL
+     ========================= -->
+
+<div
+        class="timezone-modal"
+        id="timezoneModal"
+        aria-hidden="true"
+>
+
+
+    <div
+            class="timezone-modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="timezoneModalTitle"
+    >
+
+
+        <div class="timezone-modal-header">
+
+            <h3 id="timezoneModalTitle">
+                Choose timezone
+            </h3>
+
+            <button
+                    type="button"
+                    id="closeTimezoneModal"
+                    class="timezone-modal-close"
+                    aria-label="Close"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <p>
+            Opening hours are stored in the company's
+            timezone and converted to your selected timezone.
+        </p>
+
+
+        <select id="timezoneSelect">
+
+            <option value="auto">
+                Automatic
+            </option>
+
+            <option value="Europe/Berlin">
+                Europe/Berlin
+            </option>
+
+            <option value="Europe/London">
+                Europe/London
+            </option>
+
+            <option value="America/New_York">
+                America/New_York
+            </option>
+
+            <option value="America/Chicago">
+                America/Chicago
+            </option>
+
+            <option value="America/Denver">
+                America/Denver
+            </option>
+
+            <option value="America/Los_Angeles">
+                America/Los_Angeles
+            </option>
+
+            <option value="Asia/Tokyo">
+                Asia/Tokyo
+            </option>
+
+            <option value="Asia/Shanghai">
+                Asia/Shanghai
+            </option>
+
+            <option value="Asia/Kolkata">
+                Asia/Kolkata
+            </option>
+
+            <option value="Australia/Sydney">
+                Australia/Sydney
+            </option>
+
+            <option value="UTC">
+                UTC
+            </option>
+
+        </select>
+
+
+        <button
+                type="button"
+                class="button button-primary"
+                id="saveTimezone"
+        >
+            Apply timezone
+        </button>
+
+
+    </div>
+
+</div>
 
 
 <!-- Central footer -->
 <div id="site-footer"></div>
 
 
+<!-- Global site scripts -->
 <script src="../script.js"></script>
 <script src="../products.js"></script>
 <script src="../store.js"></script>
 
+
+<!-- =========================
+     ABOUT PAGE JAVASCRIPT
+     ========================= -->
+
+<script>
+
+
+    /* =========================================================
+       COMPANY OPENING HOURS
+       ========================================================= */
+
+    /*
+        IMPORTANT:
+
+        These times are entered in the company's timezone.
+
+        Change this timezone if zLegoleon™ ever moves
+        headquarters for extremely legitimate reasons.
+    */
+
+    const OPENING_HOURS = {
+
+        timezone: "Europe/Berlin",
+
+        monday: [
+            "08:00",
+            "18:00"
+        ],
+
+        tuesday: [
+            "08:00",
+            "18:00"
+        ],
+
+        wednesday: [
+            "08:00",
+            "18:00"
+        ],
+
+        thursday: [
+            "08:00",
+            "18:00"
+        ],
+
+        friday: [
+            "08:00",
+            "16:00"
+        ],
+
+        saturday: null,
+
+        sunday: null
+
+    };
+
+
+    /* =========================================================
+       SETTINGS
+       ========================================================= */
+
+    const TIMEZONE_STORAGE_KEY =
+        "zlegoleon-timezone";
+
+
+    /* =========================================================
+       TIMEZONE DETECTION
+       ========================================================= */
+
+    function getAutomaticTimezone() {
+
+        return (
+            Intl.DateTimeFormat()
+                .resolvedOptions()
+                .timeZone
+            || "UTC"
+        );
+
+    }
+
+
+    function getUserTimezone() {
+
+        const savedTimezone =
+            localStorage.getItem(
+                TIMEZONE_STORAGE_KEY
+            );
+
+        if (savedTimezone) {
+            return savedTimezone;
+        }
+
+        return getAutomaticTimezone();
+
+    }
+
+
+    /* =========================================================
+       TIMEZONE DISPLAY NAME
+       ========================================================= */
+
+    function getTimezoneName(timezone) {
+
+        /*
+            Turn something like:
+
+            Europe/Berlin
+
+            into:
+
+            Europe/Berlin
+
+            We intentionally keep the IANA name because
+            it is unambiguous and useful.
+        */
+
+        return timezone || "UTC";
+
+    }
+
+
+    /* =========================================================
+       CONVERT A LOCAL TIME IN ONE TIMEZONE
+       TO A LOCAL TIME IN ANOTHER TIMEZONE
+       ========================================================= */
+
+    function convertTime(
+        year,
+        month,
+        day,
+        time,
+        sourceTimezone,
+        targetTimezone
+    ) {
+
+
+        const [
+            hours,
+            minutes
+        ] = time
+            .split(":")
+            .map(Number);
+
+
+        /*
+            Start with a rough UTC guess.
+        */
+
+        let timestamp =
+            Date.UTC(
+                year,
+                month,
+                day,
+                hours,
+                minutes
+            );
+
+
+        /*
+            Correct the timestamp using the source
+            timezone's actual UTC offset.
+
+            Running this a couple of times handles
+            daylight-saving-time offsets correctly.
+        */
+
+        for (let i = 0; i < 3; i++) {
+
+            const parts =
+                new Intl.DateTimeFormat(
+                    "en-US",
+                    {
+                        timeZone: sourceTimezone,
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hourCycle: "h23"
+                    }
+                )
+                .formatToParts(
+                    new Date(timestamp)
+                );
+
+
+            const getPart = type =>
+                Number(
+                    parts.find(
+                        part =>
+                            part.type === type
+                    )?.value
+                );
+
+
+            const actualYear =
+                getPart("year");
+
+            const actualMonth =
+                getPart("month") - 1;
+
+            const actualDay =
+                getPart("day");
+
+            const actualHour =
+                getPart("hour");
+
+            const actualMinute =
+                getPart("minute");
+
+
+            const actualTimestamp =
+                Date.UTC(
+                    actualYear,
+                    actualMonth,
+                    actualDay,
+                    actualHour,
+                    actualMinute
+                );
+
+
+            const desiredTimestamp =
+                Date.UTC(
+                    year,
+                    month,
+                    day,
+                    hours,
+                    minutes
+                );
+
+
+            timestamp +=
+                desiredTimestamp -
+                actualTimestamp;
+
+        }
+
+
+        /*
+            Now format the resulting instant
+            in the visitor's timezone.
+        */
+
+        const formatted =
+            new Intl.DateTimeFormat(
+                "en-US",
+                {
+                    timeZone: targetTimezone,
+                    weekday: "short",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hourCycle: "h23"
+                }
+            )
+            .formatToParts(
+                new Date(timestamp)
+            );
+
+
+        const weekday =
+            formatted.find(
+                part =>
+                    part.type === "weekday"
+            )?.value;
+
+
+        const hour =
+            formatted.find(
+                part =>
+                    part.type === "hour"
+            )?.value;
+
+
+        const minute =
+            formatted.find(
+                part =>
+                    part.type === "minute"
+            )?.value;
+
+
+        return {
+            weekday,
+            time: `${hour}:${minute}`
+        };
+
+    }
+
+
+    /* =========================================================
+       FIND A REFERENCE DATE FOR EACH WEEKDAY
+       ========================================================= */
+
+    function getReferenceDate(dayIndex) {
+
+        /*
+            Use a week containing the current date.
+
+            This is important because timezone offsets can change
+            due to daylight saving time.
+        */
+
+        const now = new Date();
+
+        const currentDay =
+            now.getDay();
+
+        const difference =
+            dayIndex - currentDay;
+
+
+        const date =
+            new Date(now);
+
+        date.setDate(
+            date.getDate() + difference
+        );
+
+
+        return {
+
+            year: date.getFullYear(),
+
+            month: date.getMonth(),
+
+            day: date.getDate()
+
+        };
+
+    }
+
+
+    /* =========================================================
+       RENDER OPENING HOURS
+       ========================================================= */
+
+    function renderOpeningHours() {
+
+
+        const container =
+            document.querySelector(
+                "#openingHours"
+            );
+
+
+        if (!container) return;
+
+
+        const timezone =
+            getUserTimezone();
+
+
+        const days = [
+
+            {
+                key: "monday",
+                name: "Monday",
+                index: 1
+            },
+
+            {
+                key: "tuesday",
+                name: "Tuesday",
+                index: 2
+            },
+
+            {
+                key: "wednesday",
+                name: "Wednesday",
+                index: 3
+            },
+
+            {
+                key: "thursday",
+                name: "Thursday",
+                index: 4
+            },
+
+            {
+                key: "friday",
+                name: "Friday",
+                index: 5
+            },
+
+            {
+                key: "saturday",
+                name: "Saturday",
+                index: 6
+            },
+
+            {
+                key: "sunday",
+                name: "Sunday",
+                index: 0
+            }
+
+        ];
+
+
+        container.innerHTML = "";
+
+
+        days.forEach(day => {
+
+
+            const hours =
+                OPENING_HOURS[day.key];
+
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "hours-row";
+
+
+            const dayElement =
+                document.createElement("span");
+
+            dayElement.textContent =
+                day.name;
+
+
+            const timeElement =
+                document.createElement("span");
+
+
+            if (!hours) {
+
+                timeElement.textContent =
+                    "Closed";
+
+            } else {
+
+
+                const date =
+                    getReferenceDate(
+                        day.index
+                    );
+
+
+                const opening =
+                    convertTime(
+                        date.year,
+                        date.month,
+                        date.day,
+                        hours[0],
+                        OPENING_HOURS.timezone,
+                        timezone
+                    );
+
+
+                const closing =
+                    convertTime(
+                        date.year,
+                        date.month,
+                        date.day,
+                        hours[1],
+                        OPENING_HOURS.timezone,
+                        timezone
+                    );
+
+
+                /*
+                    If the conversion crosses midnight,
+                    show the weekday of the closing time.
+
+                    Example:
+
+                    20:00 – Tue 02:00
+                */
+
+                const closingDisplay =
+                    closing.weekday !== opening.weekday
+                        ? `${closing.weekday} ${closing.time}`
+                        : closing.time;
+
+
+                timeElement.textContent =
+                    `${opening.time} – ${closingDisplay}`;
+
+            }
+
+
+            row.appendChild(
+                dayElement
+            );
+
+            row.appendChild(
+                timeElement
+            );
+
+
+            container.appendChild(
+                row
+            );
+
+        });
+
+    }
+
+
+    /* =========================================================
+       TIMEZONE DISPLAY
+       ========================================================= */
+
+    function updateTimezoneDisplay() {
+
+
+        const element =
+            document.querySelector(
+                "#userTimezone"
+            );
+
+
+        if (!element) return;
+
+
+        element.textContent =
+            getTimezoneName(
+                getUserTimezone()
+            );
+
+    }
+
+
+    /* =========================================================
+       MODAL ELEMENTS
+       ========================================================= */
+
+    const timezoneModal =
+        document.querySelector(
+            "#timezoneModal"
+        );
+
+
+    const changeTimezoneButton =
+        document.querySelector(
+            "#changeTimezone"
+        );
+
+
+    const closeTimezoneButton =
+        document.querySelector(
+            "#closeTimezoneModal"
+        );
+
+
+    const saveTimezoneButton =
+        document.querySelector(
+            "#saveTimezone"
+        );
+
+
+    const timezoneSelect =
+        document.querySelector(
+            "#timezoneSelect"
+        );
+
+
+    /* =========================================================
+       OPEN TIMEZONE MODAL
+       ========================================================= */
+
+    changeTimezoneButton?.addEventListener(
+        "click",
+        () => {
+
+            const currentTimezone =
+                getUserTimezone();
+
+
+            const optionExists =
+                [
+                    ...timezoneSelect.options
+                ]
+                .some(
+                    option =>
+                        option.value ===
+                        currentTimezone
+                );
+
+
+            timezoneSelect.value =
+                optionExists
+                    ? currentTimezone
+                    : "auto";
+
+
+            timezoneModal.classList.add(
+                "open"
+            );
+
+            timezoneModal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+        }
+    );
+
+
+    /* =========================================================
+       CLOSE TIMEZONE MODAL
+       ========================================================= */
+
+    function closeTimezoneModal() {
+
+        timezoneModal.classList.remove(
+            "open"
+        );
+
+        timezoneModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    closeTimezoneButton?.addEventListener(
+        "click",
+        closeTimezoneModal
+    );
+
+
+    /* =========================================================
+       CLOSE WHEN CLICKING OUTSIDE
+       ========================================================= */
+
+    timezoneModal?.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                timezoneModal
+            ) {
+
+                closeTimezoneModal();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       ESCAPE KEY
+       ========================================================= */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape" &&
+                timezoneModal.classList.contains("open")
+            ) {
+
+                closeTimezoneModal();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       SAVE TIMEZONE
+       ========================================================= */
+
+    saveTimezoneButton?.addEventListener(
+        "click",
+        () => {
+
+
+            const selectedTimezone =
+                timezoneSelect.value;
+
+
+            if (
+                selectedTimezone ===
+                "auto"
+            ) {
+
+                localStorage.removeItem(
+                    TIMEZONE_STORAGE_KEY
+                );
+
+            } else {
+
+                localStorage.setItem(
+                    TIMEZONE_STORAGE_KEY,
+                    selectedTimezone
+                );
+
+            }
+
+
+            updateTimezoneDisplay();
+
+            renderOpeningHours();
+
+            closeTimezoneModal();
+
+        }
+    );
+
+
+    /* =========================================================
+       INITIALIZE
+       ========================================================= */
+
+    updateTimezoneDisplay();
+
+    renderOpeningHours();
+
+</script>
+
+
 </body>
+
 </html>
