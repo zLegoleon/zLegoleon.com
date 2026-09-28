@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    zLegoleon Plushie — zLegoleon™
+  </title>
+
+  <link
+          rel="stylesheet"
+          href="../../style.css"
+  >
+
+</head>
+
+
+<body>
+
+
+<div id="site-nav"></div>
+
+
+<main class="product-page">
+
+
+  <a
+          href="../../store/"
+          class="back-link"
+  >
+    ← Back to Store
+  </a>
+
+
+  <div class="product-layout">
+
+
+    <!-- IMAGE -->
+
+    <div class="product-main-image">
+
+      <img
+              src="../../images/plushies/zLegoleon.png"
+              alt="zLegoleon Plushie"
+      >
+
+    </div>
+
+
+
+    <!-- DETAILS -->
+
+    <div class="product-details">
+
+      <p class="eyebrow">
+        zLegoleon™ Plushies
+      </p>
+
+
+      <h1 id="productName">
+        zLegoleon Plushie
+      </h1>
+
+
+      <p
+              class="product-description"
+              id="productDescription"
+      ></p>
+
+
+      <div
+              class="product-price"
+              id="productPrice"
+      ></div>
+
+
+
+      <!-- PURCHASE -->
+
+      <div class="purchase-box">
+
+        <label class="quantity-label">
+          Quantity
+        </label>
+
+
+        <div class="quantity-control">
+
+          <button
+                  id="decreaseQuantity"
+                  type="button"
+          >
+            −
+          </button>
+
+
+          <span id="quantity">
+                        1
+                    </span>
+
+
+          <button
+                  id="increaseQuantity"
+                  type="button"
+          >
+            +
+          </button>
+
+        </div>
+
+
+        <button
+                class="add-cart-button"
+                id="addToCartButton"
+                type="button"
+        >
+          Add to Cart
+        </button>
+
+
+        <div
+                class="cart-message"
+                id="cartMessage"
+        ></div>
+
+      </div>
+
+
+
+      <!-- META -->
+
+      <div class="product-meta">
+
+        <p>
+
+          <strong>
+            Product:
+          </strong>
+
+          <span id="productId"></span>
+
+        </p>
+
+
+        <p>
+
+          <strong>
+            Category:
+          </strong>
+
+          <span id="productCategory"></span>
+
+        </p>
+
+
+        <p>
+
+          <strong>
+            Status:
+          </strong>
+
+          Extremely real
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+<div id="site-footer"></div>
+
+
+<script src="../../script.js"></script>
+
+<script src="../../products.js"></script>
+
+<script src="../../store.js"></script>
+
+
+<script>
+
+  // ================================================
+  // PRODUCT
+  // ================================================
+
+  const product =
+      PRODUCTS.zlegoleonPlushie;
+
+
+  document.getElementById(
+      "productName"
+  ).textContent =
+      product.name;
+
+
+  document.getElementById(
+      "productDescription"
+  ).textContent =
+      product.description;
+
+
+  document.getElementById(
+      "productPrice"
+  ).textContent =
+      formatPrice(
+          product.price
+      );
+
+
+  document.getElementById(
+      "productId"
+  ).textContent =
+      product.id;
+
+
+  document.getElementById(
+      "productCategory"
+  ).textContent =
+      product.category;
+
+
+
+  // ================================================
+  // QUANTITY
+  // ================================================
+
+  let quantity = 1;
+
+
+  const quantityElement =
+      document.getElementById(
+          "quantity"
+      );
+
+
+  function updateQuantity() {
+
+      quantityElement.textContent =
+          quantity;
+
+  }
+
+
+  document
+      .getElementById(
+          "decreaseQuantity"
+      )
+      .addEventListener(
+          "click",
+          () => {
+
+              if (quantity > 1) {
+
+                  quantity--;
+
+                  updateQuantity();
+
+              }
+
+          }
+      );
+
+
+  document
+      .getElementById(
+          "increaseQuantity"
+      )
+      .addEventListener(
+          "click",
+          () => {
+
+              quantity++;
+
+              updateQuantity();
+
+          }
+      );
+
+
+
+  // ================================================
+  // ADD TO CART
+  // ================================================
+
+  document
+      .getElementById(
+          "addToCartButton"
+      )
+      .addEventListener(
+          "click",
+          () => {
+
+              addToCart(
+                  product,
+                  quantity
+              );
+
+
+              const message =
+                  document.getElementById(
+                      "cartMessage"
+                  );
+
+
+              message.textContent =
+                  quantity === 1
+                      ? "Added to cart."
+                      : `${quantity} added to cart.`;
+
+
+              setTimeout(
+                  () => {
+
+                      message.textContent = "";
+
+                  },
+                  2500
+              );
+
+          }
+      );
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Store — zLegoleon™
+  </title>
+
+  <link
+          rel="stylesheet"
+          href="../style.css"
+  >
+
+</head>
+
+
+<body>
+
+
+<div id="site-nav"></div>
+
+
+<main class="subpage">
+
+
+  <!-- =================================================
+       HEADER
+       ================================================= -->
+
+  <section class="page-header">
+
+    <p class="eyebrow">
+      zLegoleon™ Store
+    </p>
+
+
+    <h1>
+      Things you can buy.
+    </h1>
+
+
+    <p>
+      Products carefully selected for people
+      who have money and questionable priorities.
+    </p>
+
+  </section>
+
+
+
+  <!-- =================================================
+       PLUSHIES
+       ================================================= -->
+
+  <section class="section">
+
+    <div class="section-header">
+
+      <div>
+
+        <p class="eyebrow">
+          Plushies
+        </p>
+
+
+        <h2>
+          Soft corporate merchandise
+        </h2>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="product-grid">
+
+
+      <!-- =============================================
+           zLegoleon Plushie
+           ============================================= -->
+
+      <a
+              href="../plushies/zlegoleon/"
+              class="product-card"
+      >
+
+        <div class="product-card-image">
+
+          <img
+                  src="../images/plushies/zLegoleon.png"
+                  alt="zLegoleon Plushie"
+          >
+
+        </div>
+
+
+        <div class="product-card-content">
+
+          <p class="eyebrow">
+            Plushies
+          </p>
+
+
+          <h3>
+            zLegoleon Plushie
+          </h3>
+
+
+          <p>
+            A physical representation
+            of zLegoleon™ itself.
+          </p>
+
+
+          <div
+                  class="product-card-price"
+                  id="zlegoleon-store-price"
+          ></div>
+
+        </div>
+
+      </a>
+
+
+
+      <!-- =============================================
+           zLegolean Plushie
+           ============================================= -->
+
+      <a
+              href="../plushies/zlegolean/"
+              class="product-card"
+      >
+
+        <div class="product-card-image">
+
+          <img
+                  src="../images/plushies/zLegolean.png"
+                  alt="zLegolean Plushie"
+          >
+
+        </div>
+
+
+        <div class="product-card-content">
+
+          <p class="eyebrow">
+            Plushies
+          </p>
+
+
+          <h3>
+            zLegolean Plushie
+          </h3>
+
+
+          <p>
+            A soft, completely unnecessary
+            representation of the zLegoleon™ brand.
+          </p>
+
+
+          <div
+                  class="product-card-price"
+                  id="zlegolean-store-price"
+          ></div>
+
+        </div>
+
+      </a>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =================================================
+       OTHER STUFF
+       ================================================= -->
+
+  <section class="section">
+
+    <div class="section-header">
+
+      <div>
+
+        <p class="eyebrow">
+          More
+        </p>
+
+
+        <h2>
+          Other stuff
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <div class="product-grid">
+
+      <div class="product-card product-card-placeholder">
+
+        <div class="product-card-placeholder-content">
+
+                    <span>
+                        Coming soon
+                    </span>
+
+
+          <h3>
+            More products
+          </h3>
+
+
+          <p>
+            We are currently pretending
+            to develop additional products.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+<div id="site-footer"></div>
+
+
+<script src="../script.js"></script>
+
+<script src="../products.js"></script>
+
+<script src="../store.js"></script>
+
+
+<script>
+
+  const zLegoleon =
+      PRODUCTS.zlegoleonPlushie;
+
+
+  const zLegolean =
+      PRODUCTS.zlegoleanPlushie;
+
+
+  document.getElementById(
+      "zlegoleon-store-price"
+  ).textContent =
+      formatPrice(
+          zLegoleon.price
+      );
+
+
+  document.getElementById(
+      "zlegolean-store-price"
+  ).textContent =
+      formatPrice(
+          zLegolean.price
+      );
+
+</script>
+
+
+</body>
+
+</html>

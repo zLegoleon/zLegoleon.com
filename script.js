@@ -1,84 +1,415 @@
-// ==========================================
-// zLegoleon™ RANDOM PAGE SYSTEM
-// ==========================================
-
-// Add new troll pages here.
-//
-// Example:
-//
-// "/plushie/"
-// "/calculator/"
-// "/something-completely-stupid/"
-
-const trollPages = [
-    "plushie/",
-    "free-money/",
-    "calculator/",
-    "download/",
-    "generator/",
-    "mystery/"
-];
+ /* =========================================================
+    ZLEGOLEON™ CENTRAL SITE SCRIPT
+    ========================================================= */
 
 
-// Pick a random page
-function goToRandomPage() {
+ /* ---------------------------------------------------------
+    SITE ROOT
+    Automatically figures out where the website lives.
 
-    const randomIndex =
-        Math.floor(Math.random() * trollPages.length);
+    This means it works both for:
 
-    const selectedPage =
-        trollPages[randomIndex];
+    https://example.github.io/
 
-    window.location.href = selectedPage;
-}
+    and:
 
+    https://example.github.io/zLegoleon/
+    --------------------------------------------------------- */
 
-// Navbar random button
-const randomButton =
-    document.getElementById("randomButton");
+ const SCRIPT_URL = document.currentScript.src;
 
-if (randomButton) {
-    randomButton.addEventListener(
-        "click",
-        goToRandomPage
-    );
-}
+ const SITE_ROOT = new URL("./", SCRIPT_URL).pathname;
 
 
-// Hero random button
-const randomHeroButton =
-    document.getElementById("randomHeroButton");
-
-if (randomHeroButton) {
-    randomHeroButton.addEventListener(
-        "click",
-        goToRandomPage
-    );
-}
+ /* Make this available to other scripts/pages */
+ window.siteUrl = function (path = "") {
+     return SITE_ROOT + path.replace(/^\/+/, "");
+ };
 
 
-// ==========================================
-// EXTRA LITTLE DETAIL
-// ==========================================
+ /* =========================================================
+    NAVIGATION CONFIGURATION
 
-// Make the page title occasionally change.
+    ADD NEW SECTIONS HERE.
+    That's it.
+    ========================================================= */
 
-const titles = [
-    "zLegoleon™ — Probably Legitimate",
-    "zLegoleon™ — Please Don't Sue Us",
-    "zLegoleon™ — 100% Real Website",
-    "zLegoleon™ — We Have A Website",
-    "zLegoleon™ — Everything Is Fine"
-];
+ const NAV_ITEMS = [
+     {
+         label: "Home",
+         path: ""
+     },
 
-let titleIndex = 0;
+     {
+         label: "Store",
+         path: "store/"
+     },
 
-setInterval(() => {
+     {
+         label: "About",
+         path: "about/"
+     }
 
-    titleIndex =
-        (titleIndex + 1) % titles.length;
+     // Example future section:
+     //
+     // {
+     //     label: "Games",
+     //     path: "games/"
+     // }
+ ];
 
-    document.title =
-        titles[titleIndex];
 
-}, 5000);
+ /* =========================================================
+    CURRENT PAGE
+    ========================================================= */
+
+ function normalizePath(path) {
+
+     return path
+         .replace(SITE_ROOT, "")
+         .replace(/^\/+/, "")
+         .replace(/\/+$/, "");
+
+ }
+
+
+ function isNavItemActive(item) {
+
+     const currentPath = normalizePath(
+         window.location.pathname
+     );
+
+     const targetPath = item.path
+         .replace(/^\/+/, "")
+         .replace(/\/+$/, "");
+
+
+     /* Homepage */
+     if (targetPath === "") {
+         return currentPath === "";
+     }
+
+
+     /* Section pages and subpages */
+     return (
+         currentPath === targetPath ||
+         currentPath.startsWith(targetPath + "/")
+     );
+ }
+
+
+ /* =========================================================
+    NAVIGATION
+    ========================================================= */
+
+ function renderNavigation() {
+
+     const container = document.getElementById("site-nav");
+
+     if (!container) {
+         return;
+     }
+
+
+     const links = NAV_ITEMS.map(item => {
+
+         const active = isNavItemActive(item)
+             ? "active"
+             : "";
+
+         return `
+             <a
+                 href="${siteUrl(item.path)}"
+                 class="${active}"
+             >
+                 ${item.label}
+             </a>
+         `;
+
+     }).join("");
+
+
+     container.innerHTML = `
+
+         <header class="navbar">
+
+             <div class="nav-container">
+
+                 <a
+                     href="${siteUrl()}"
+                     class="logo"
+                 >
+                     zLegoleon<span>™</span>
+                 </a>
+
+
+                 <div class="nav-right">
+
+                     <nav
+                         class="nav-links"
+                         id="navLinks"
+                     >
+                         ${links}
+                     </nav>
+
+
+                     <a
+                         href="${siteUrl("cart/")}"
+                         class="cart-button"
+                         aria-label="Shopping cart"
+                     >
+                         🛒
+                         <span
+                             class="cart-count hidden"
+                             id="cartCount"
+                         >
+                             0
+                         </span>
+                     </a>
+
+
+                     <button
+                         class="theme-button"
+                         id="themeButton"
+                         aria-label="Toggle theme"
+                     >
+                         ◐
+                     </button>
+
+
+                     <button
+                         class="menu-button"
+                         id="menuButton"
+                         aria-label="Open navigation"
+                         aria-expanded="false"
+                     >
+                         ☰
+                     </button>
+
+                 </div>
+
+             </div>
+
+         </header>
+
+     `;
+ }
+
+
+ /* =========================================================
+    FOOTER
+    ========================================================= */
+
+ function renderFooter() {
+
+     const container = document.getElementById("site-footer");
+
+     if (!container) {
+         return;
+     }
+
+
+     const links = NAV_ITEMS.map(item => {
+
+         return `
+             <a href="${siteUrl(item.path)}">
+                 ${item.label}
+             </a>
+         `;
+
+     }).join("");
+
+
+     container.innerHTML = `
+
+         <footer class="footer">
+
+             <div class="footer-container">
+
+                 <div class="footer-brand">
+
+                     <div class="logo">
+                         zLegoleon<span>™</span>
+                     </div>
+
+                     <p>
+                         Products you probably don't need.
+                     </p>
+
+                     <p>
+                         © ${new Date().getFullYear()}
+                         zLegoleon™
+                     </p>
+
+                 </div>
+
+
+                 <div class="footer-links">
+
+                     ${links}
+
+                     <a href="${siteUrl("cart/")}">
+                         Cart
+                     </a>
+
+                 </div>
+
+             </div>
+
+         </footer>
+
+     `;
+ }
+
+
+ /* =========================================================
+    THEME
+    ========================================================= */
+
+ const THEME_KEY = "zlegoleon-theme";
+
+
+ function setTheme(theme) {
+
+     if (theme === "light") {
+
+         document.body.classList.add("light");
+
+         localStorage.setItem(
+             THEME_KEY,
+             "light"
+         );
+
+     } else {
+
+         document.body.classList.remove("light");
+
+         localStorage.setItem(
+             THEME_KEY,
+             "dark"
+         );
+     }
+ }
+
+
+ function loadTheme() {
+
+     const savedTheme =
+         localStorage.getItem(THEME_KEY);
+
+
+     if (savedTheme === "light") {
+
+         document.body.classList.add("light");
+
+     } else {
+
+         document.body.classList.remove("light");
+     }
+ }
+
+
+ function setupThemeButton() {
+
+     const button =
+         document.getElementById("themeButton");
+
+
+     if (!button) {
+         return;
+     }
+
+
+     button.addEventListener("click", () => {
+
+         const isLight =
+             document.body.classList.contains("light");
+
+
+         setTheme(
+             isLight
+                 ? "dark"
+                 : "light"
+         );
+
+     });
+ }
+
+
+ /* =========================================================
+    MOBILE MENU
+    ========================================================= */
+
+ function setupMobileMenu() {
+
+     const button =
+         document.getElementById("menuButton");
+
+     const nav =
+         document.getElementById("navLinks");
+
+
+     if (!button || !nav) {
+         return;
+     }
+
+
+     button.addEventListener("click", () => {
+
+         const open =
+             nav.classList.toggle("open");
+
+
+         button.setAttribute(
+             "aria-expanded",
+             open
+         );
+
+         button.textContent =
+             open
+                 ? "✕"
+                 : "☰";
+
+     });
+
+
+     /* Close menu after clicking a link */
+
+     nav.querySelectorAll("a").forEach(link => {
+
+         link.addEventListener("click", () => {
+
+             nav.classList.remove("open");
+
+             button.setAttribute(
+                 "aria-expanded",
+                 "false"
+             );
+
+             button.textContent = "☰";
+
+         });
+
+     });
+
+ }
+
+
+ /* =========================================================
+    INITIALIZATION
+    ========================================================= */
+
+ document.addEventListener(
+     "DOMContentLoaded",
+     () => {
+
+         renderNavigation();
+         renderFooter();
+
+         loadTheme();
+
+         setupThemeButton();
+         setupMobileMenu();
+
+     }
+ );

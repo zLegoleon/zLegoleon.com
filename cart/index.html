@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Cart — zLegoleon™
+  </title>
+
+  <link
+          rel="stylesheet"
+          href="../style.css"
+  >
+
+</head>
+
+
+<body>
+
+
+<div id="site-nav"></div>
+
+
+<main class="subpage">
+
+
+  <!-- =================================================
+       HEADER
+       ================================================= -->
+
+  <section class="page-header">
+
+    <p class="eyebrow">
+      zLegoleon™
+    </p>
+
+
+    <h1>
+      Your Cart
+    </h1>
+
+
+    <p>
+      Review your extremely reasonable purchases.
+    </p>
+
+  </section>
+
+
+
+  <!-- =================================================
+       CART
+       ================================================= -->
+
+  <section class="section">
+
+
+    <div
+            class="cart-layout"
+            id="cartLayout"
+    >
+
+
+      <div class="cart-items">
+
+        <div id="cartItems"></div>
+
+      </div>
+
+
+
+      <div class="cart-summary">
+
+        <p class="eyebrow">
+          Summary
+        </p>
+
+
+        <h2>
+          Order Summary
+        </h2>
+
+
+        <div class="summary-row">
+
+                    <span>
+                        Items
+                    </span>
+
+          <span id="cartItemCount">
+                        0
+                    </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+          <span id="cartSubtotal">
+                        €0.00
+                    </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+                    <span>
+                        Shipping
+                    </span>
+
+          <span>
+                        €0.00
+                    </span>
+
+        </div>
+
+
+        <div class="cart-summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+          <span id="cartTotal">
+                        €0.00
+                    </span>
+
+        </div>
+
+
+        <button
+                class="button button-primary checkout-button"
+                id="checkoutButton"
+                type="button"
+        >
+          Proceed to Checkout
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- EMPTY -->
+
+    <div
+            class="empty-cart"
+            id="emptyCart"
+            style="display: none;"
+    >
+
+      <h2>
+        Your cart is empty.
+      </h2>
+
+
+      <p>
+        This is probably financially responsible.
+      </p>
+
+
+      <a
+              href="../store/"
+              class="button button-primary"
+      >
+        Browse Store
+      </a>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     PAYMENT MODAL
+     ===================================================== -->
+
+<div
+        class="payment-overlay"
+        id="paymentModal"
+>
+
+  <div class="payment-modal">
+
+    <div class="payment-header">
+
+      <h2>
+        Payment
+      </h2>
+
+      <button
+              class="close-payment"
+              id="closePaymentModal"
+              type="button"
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <div class="payment-body">
+
+      <div class="payment-security">
+        This is a demonstration checkout. No real money will be taken.
+      </div>
+
+
+      <form id="paymentForm" class="payment-form">
+
+        <div class="payment-field">
+
+          <label>
+            Name
+          </label>
+
+          <input
+                  type="text"
+                  required
+          >
+
+        </div>
+
+
+        <div class="payment-field">
+
+          <label>
+            Card number
+          </label>
+
+          <input
+                  type="text"
+                  placeholder="0000 0000 0000 0000"
+                  required
+          >
+
+        </div>
+
+
+        <div class="payment-row">
+
+          <div class="payment-field">
+
+            <label>
+              Expiry
+            </label>
+
+            <input
+                    type="text"
+                    placeholder="MM/YY"
+                    required
+            >
+
+          </div>
+
+
+          <div class="payment-field">
+
+            <label>
+              CVC
+            </label>
+
+            <input
+                    type="text"
+                    placeholder="123"
+                    required
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+                class="payment-submit"
+                type="submit"
+        >
+          Pay Now
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div id="site-footer"></div>
+
+
+
+<script src="../script.js"></script>
+
+<script src="../products.js"></script>
+
+<script src="../store.js"></script>
+
+
+<script>
+
+  // ================================================
+  // ELEMENTS
+  // ================================================
+
+  const cartItemsElement =
+      document.getElementById(
+          "cartItems"
+      );
+
+
+  const cartItemCountElement =
+      document.getElementById(
+          "cartItemCount"
+      );
+
+
+  const cartSubtotalElement =
+      document.getElementById(
+          "cartSubtotal"
+      );
+
+
+  const cartTotalElement =
+      document.getElementById(
+          "cartTotal"
+      );
+
+
+  const cartLayout =
+      document.getElementById(
+          "cartLayout"
+      );
+
+
+  const emptyCart =
+      document.getElementById(
+          "emptyCart"
+      );
+
+
+
+  // ================================================
+  // RENDER CART
+  // ================================================
+
+  function renderCart() {
+
+      const cart =
+          getCart();
+
+
+      if (cart.length === 0) {
+
+          cartLayout.style.display =
+              "none";
+
+
+          emptyCart.style.display =
+              "block";
+
+
+          return;
+
+      }
+
+
+      cartLayout.style.display =
+          "grid";
+
+
+      emptyCart.style.display =
+          "none";
+
+
+      cartItemsElement.innerHTML =
+          "";
+
+
+      let itemCount = 0;
+
+
+      cart.forEach(item => {
+
+          itemCount +=
+              item.quantity;
+
+
+          const itemElement =
+              document.createElement(
+                  "div"
+              );
+
+
+          itemElement.className =
+              "cart-item";
+
+
+          itemElement.innerHTML = `
+
+              <div class="cart-item-image">
+
+                  <img
+                      src="../${item.image}"
+                      alt="${item.name}"
+                  >
+
+              </div>
+
+
+              <div class="cart-item-info">
+
+                  <p class="eyebrow">
+                      ${item.category}
+                  </p>
+
+
+                  <h3>
+                      ${item.name}
+                  </h3>
+
+
+                  <p class="cart-item-price">
+                      ${formatPrice(item.price)}
+                  </p>
+
+
+                  <div class="cart-quantity">
+
+                      <button
+                          type="button"
+                          data-action="decrease"
+                          data-id="${item.id}"
+                      >
+                          −
+                      </button>
+
+
+                      <span>
+                          ${item.quantity}
+                      </span>
+
+
+                      <button
+                          type="button"
+                          data-action="increase"
+                          data-id="${item.id}"
+                      >
+                          +
+                      </button>
+
+
+                      <button
+                          type="button"
+                          class="remove-item"
+                          data-action="remove"
+                          data-id="${item.id}"
+                      >
+                          Remove
+                      </button>
+
+                  </div>
+
+              </div>
+
+
+              <div class="cart-item-total">
+
+                  ${formatPrice(
+                      item.price *
+                      item.quantity
+                  )}
+
+              </div>
+
+          `;
+
+
+          cartItemsElement.appendChild(
+              itemElement
+          );
+
+      });
+
+
+
+      // SUMMARY
+
+      cartItemCountElement.textContent =
+          itemCount;
+
+
+      const total =
+          getCartTotal();
+
+
+      cartSubtotalElement.textContent =
+          formatPrice(
+              total
+          );
+
+
+      cartTotalElement.textContent =
+          formatPrice(
+              total
+          );
+
+
+
+      // CONTROLS
+
+      cartItemsElement
+          .querySelectorAll(
+              "[data-action]"
+          )
+          .forEach(button => {
+
+              button.addEventListener(
+                  "click",
+                  () => {
+
+                      const action =
+                          button.dataset.action;
+
+
+                      const productId =
+                          button.dataset.id;
+
+
+                      if (
+                          action ===
+                          "increase"
+                      ) {
+
+                          changeCartQuantity(
+                              productId,
+                              1
+                          );
+
+                      }
+
+
+                      if (
+                          action ===
+                          "decrease"
+                      ) {
+
+                          changeCartQuantity(
+                              productId,
+                              -1
+                          );
+
+                      }
+
+
+                      if (
+                          action ===
+                          "remove"
+                      ) {
+
+                          removeFromCart(
+                              productId
+                          );
+
+                      }
+
+
+                      renderCart();
+
+                  }
+              );
+
+          });
+
+  }
+
+
+  // Initial render
+
+  renderCart();
+
+
+
+  // ================================================
+  // CHECKOUT
+  // ================================================
+
+  const paymentModal =
+      document.getElementById(
+          "paymentModal"
+      );
+
+
+  const checkoutButton =
+      document.getElementById(
+          "checkoutButton"
+      );
+
+
+  const closePaymentModal =
+      document.getElementById(
+          "closePaymentModal"
+      );
+
+
+  checkoutButton.addEventListener(
+      "click",
+      () => {
+
+          if (
+              getCart().length === 0
+          ) {
+
+              return;
+
+          }
+
+
+          paymentModal.classList.add(
+              "open"
+          );
+
+      }
+  );
+
+
+  closePaymentModal.addEventListener(
+      "click",
+      () => {
+
+          paymentModal.classList.remove(
+              "open"
+          );
+
+      }
+  );
+
+
+  paymentModal.addEventListener(
+      "click",
+      event => {
+
+          if (
+              event.target ===
+              paymentModal
+          ) {
+
+              paymentModal.classList.remove(
+                  "open"
+              );
+
+          }
+
+      }
+  );
+
+
+
+  // ================================================
+  // PAYMENT
+  // ================================================
+
+  document
+      .getElementById(
+          "paymentForm"
+      )
+      .addEventListener(
+          "submit",
+          event => {
+
+              event.preventDefault();
+
+
+              alert(
+                  "Payment system not implemented yet. Your money is safe. Probably."
+              );
+
+          }
+      );
+
+</script>
+
+
+</body>
+
+</html>
