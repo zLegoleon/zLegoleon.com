@@ -1508,10 +1508,21 @@
 
 .remove-item {
     align-self: center;
+
     width: auto;
-    min-width: 0;
+    min-width: 66px;
+    height: 28px;
+
     margin-top: 0;
-    padding: 0;
+    padding: 0 9px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
     white-space: nowrap;
-    line-height: 28px;
+    line-height: 1;
+
+    border: 0;
+    border-radius: 6px;
 }
