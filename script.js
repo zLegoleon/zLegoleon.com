@@ -50,9 +50,20 @@ const NAV_ITEMS = [
     },
 
     {
-        label: "Gallery",
-        path: "gallery/"
-    },
+            label: "Products",
+            path: "products/",
+            dropdown: [
+                {
+                    label: "OnlyLego",
+                    path: "products/onlylego/"
+                },
+
+                {
+                    label: "Coming soon",
+                    path: "products/coming-soon/"
+                }
+            ]
+        },
 
     {
         label: "About",
@@ -136,13 +147,72 @@ function renderNavigation() {
                 : "";
 
 
+        /* =============================================
+           NORMAL NAV ITEM
+           ============================================= */
+
+        if (!item.dropdown) {
+
+            return `
+                <a
+                    href="${siteUrl(item.path)}"
+                    class="${active}"
+                >
+                    ${item.label}
+                </a>
+            `;
+
+        }
+
+
+        /* =============================================
+           DROPDOWN NAV ITEM
+           ============================================= */
+
+        const dropdownLinks =
+            item.dropdown
+                .map(dropdownItem => {
+
+                    return `
+                        <a
+                            href="${siteUrl(dropdownItem.path)}"
+                        >
+                            ${dropdownItem.label}
+                        </a>
+                    `;
+
+                })
+                .join("");
+
+
         return `
-            <a
-                href="${siteUrl(item.path)}"
-                class="${active}"
+
+            <div
+                class="nav-dropdown"
             >
-                ${item.label}
-            </a>
+
+                <button
+                    class="nav-dropdown-button ${active}"
+                    type="button"
+                >
+                    ${item.label}
+
+                    <span class="dropdown-arrow">
+                        ▾
+                    </span>
+                </button>
+
+
+                <div
+                    class="nav-dropdown-menu"
+                >
+
+                    ${dropdownLinks}
+
+                </div>
+
+            </div>
+
         `;
 
     }).join("");
@@ -168,7 +238,9 @@ function renderNavigation() {
                         class="nav-links"
                         id="navLinks"
                     >
+
                         ${links}
+
                     </nav>
 
 
@@ -216,13 +288,7 @@ function renderNavigation() {
 
 
     /*
-     * The navbar has just been created.
-     *
-     * If store.js is loaded on this page,
-     * update the cart badge immediately.
-     *
-     * This makes the red (1) / (2) / etc.
-     * persist when navigating between pages.
+     * Update cart badge after creating navbar.
      */
 
     if (typeof updateCartCount === "function") {
@@ -231,8 +297,33 @@ function renderNavigation() {
 
     }
 
-}
 
+    /* =============================================
+       MOBILE DROPDOWN
+       ============================================= */
+
+    document
+        .querySelectorAll(".nav-dropdown-button")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const dropdown =
+                        button.parentElement;
+
+
+                    dropdown.classList.toggle(
+                        "open"
+                    );
+
+                }
+            );
+
+        });
+
+}
 
 /* =========================================================
    FOOTER
