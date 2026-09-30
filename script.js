@@ -54,7 +54,7 @@ const NAV_ITEMS = [
             path: "products/",
             dropdown: [
                 {
-                    label: "OnlyLego",
+                    label: "Onlylego",
                     path: "products/onlylego/"
                 },
 
@@ -537,6 +537,81 @@ function setupMobileMenu() {
 }
 
 
+function setupNavbarScroll() {
+
+    const navbar =
+        document.querySelector(".navbar");
+
+    if (!navbar) {
+        return;
+    }
+
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener(
+        "scroll",
+        () => {
+
+            const currentScrollY =
+                window.scrollY;
+
+            /*
+             * Always show the navbar at the top.
+             */
+            if (currentScrollY <= 10) {
+
+                navbar.classList.remove(
+                    "nav-hidden"
+                );
+
+                lastScrollY =
+                    currentScrollY;
+
+                return;
+            }
+
+
+            /*
+             * Scrolling down → hide navbar.
+             */
+            if (
+                currentScrollY >
+                lastScrollY
+            ) {
+
+                navbar.classList.add(
+                    "nav-hidden"
+                );
+
+            }
+
+
+            /*
+             * Scrolling up → show navbar.
+             */
+            else if (
+                currentScrollY <
+                lastScrollY
+            ) {
+
+                navbar.classList.remove(
+                    "nav-hidden"
+                );
+
+            }
+
+
+            lastScrollY =
+                currentScrollY;
+
+        },
+        {
+            passive: true
+        }
+    );
+
+}
+
 /* =========================================================
    INITIALIZATION
    ========================================================= */
@@ -554,6 +629,8 @@ document.addEventListener(
         setupThemeButton();
 
         setupMobileMenu();
+
+        setupNavbarScroll();
 
     }
 );

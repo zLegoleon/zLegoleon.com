@@ -91,18 +91,38 @@
     NAVIGATION
     ========================================================= */
 
- .navbar {
-     position: sticky;
-     top: 0;
-     z-index: 1000;
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 
-     background: var(--nav-background);
+    z-index: 1000;
 
-     backdrop-filter: blur(16px);
-     -webkit-backdrop-filter: blur(16px);
+    background: var(--nav-background);
 
-     border-bottom: 1px solid var(--border);
- }
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-bottom: 1px solid var(--border);
+
+    transition:
+        transform 0.25s ease-in-out;
+
+    will-change: transform;
+}
+
+.navbar.nav-hidden {
+    transform: translateY(-100%);
+}
+
+/*
+ * Keep the navbar's space in the document
+ * even though the actual navbar is fixed.
+ */
+#site-nav {
+    height: 70px;
+}
 
  .nav-container {
      max-width: var(--max-width);
@@ -1312,7 +1332,11 @@
     MOBILE
     ========================================================= */
 
- @media (max-width: 800px) {
+@media (max-width: 800px) {
+
+    #site-nav {
+        height: 62px;
+    }
 
      .nav-container {
          height: 62px;
@@ -1982,10 +2006,9 @@
    ========================================================= */
 
 .nav-dropdown-menu {
-
     position: absolute;
 
-    top: calc(100% + 12px);
+    top: 100%;
     left: 50%;
 
     transform:
@@ -1994,7 +2017,7 @@
 
     min-width: 160px;
 
-    padding: 6px;
+    padding: 12px 6px 6px;
 
     background: var(--surface);
 
@@ -2006,9 +2029,7 @@
         0 12px 30px rgba(0, 0, 0, 0.25);
 
     opacity: 0;
-
     visibility: hidden;
-
     pointer-events: none;
 
     transition:
@@ -2018,7 +2039,6 @@
 
     z-index: 100;
 }
-
 
 /* Desktop hover */
 
@@ -2120,3 +2140,255 @@
     }
 
 }
+
+/* =========================================================
+   ONLYLEGO HERO
+   ========================================================= */
+
+.onlylego-hero {
+
+    min-height: calc(100vh - 72px);
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    align-items: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.onlylego-hero-content {
+
+    padding:
+        80px
+        max(40px, calc((100vw - var(--max-width)) / 2));
+
+    z-index: 2;
+
+}
+
+
+.onlylego-hero-content h1 {
+
+    font-size: clamp(
+        4rem,
+        9vw,
+        8rem
+    );
+
+    line-height: 0.9;
+
+    letter-spacing: -0.06em;
+
+    margin:
+        10px
+        0
+        25px;
+
+}
+
+
+.onlylego-hero-content > p:not(.eyebrow) {
+
+    max-width: 480px;
+
+    font-size: 1.15rem;
+
+    color: var(--muted);
+
+    line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   HERO IMAGE
+   ========================================================= */
+
+.onlylego-hero-image {
+
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+}
+
+
+.onlylego-hero-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+
+/* =========================================================
+   SCROLL HINT
+   ========================================================= */
+
+.onlylego-scroll-hint {
+
+    display: inline-flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-top: 70px;
+
+    color: var(--muted);
+
+    font-size: 0.8rem;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+}
+
+
+.onlylego-scroll-hint span {
+
+    font-size: 1.3rem;
+
+    animation:
+        onlylegoScrollArrow
+        1.5s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes onlylegoScrollArrow {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(6px);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .onlylego-hero {
+
+        min-height:
+            calc(100vh - 64px);
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .onlylego-hero-content {
+
+        padding:
+            60px
+            25px;
+
+        align-self: center;
+
+    }
+
+
+    .onlylego-hero-content h1 {
+
+        font-size: 4.5rem;
+
+    }
+
+
+    .onlylego-hero-image {
+
+        position: absolute;
+
+        inset: 0;
+
+        opacity: 0.25;
+
+    }
+
+
+    .onlylego-hero-content {
+
+        position: relative;
+
+    }
+
+}
+
+.onlylego-hero-image {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+
+/* Fade the image into the page on the left */
+
+.onlylego-hero-image::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 50%;
+
+    background:
+        linear-gradient(
+            to right,
+            var(--background),
+            transparent
+        );
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+
+.onlylego-hero-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
