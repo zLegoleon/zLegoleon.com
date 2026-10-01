@@ -613,6 +613,152 @@ function setupNavbarScroll() {
 }
 
 /* =========================================================
+   GALLERY LIGHTBOX
+   ========================================================= */
+
+function setupGallery() {
+
+    const items =
+        document.querySelectorAll(
+            ".gallery-item"
+        );
+
+    const lightbox =
+        document.getElementById(
+            "galleryLightbox"
+        );
+
+    const lightboxImage =
+        document.getElementById(
+            "galleryLightboxImage"
+        );
+
+    const closeButton =
+        document.getElementById(
+            "galleryLightboxClose"
+        );
+
+
+    if (
+        !items.length ||
+        !lightbox ||
+        !lightboxImage ||
+        !closeButton
+    ) {
+        return;
+    }
+
+
+    function openGalleryImage(
+        imagePath,
+        altText
+    ) {
+
+        lightboxImage.src =
+            imagePath;
+
+        lightboxImage.alt =
+            altText;
+
+        lightbox.classList.add(
+            "open"
+        );
+
+        lightbox.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+    }
+
+
+    function closeGallery() {
+
+        lightbox.classList.remove(
+            "open"
+        );
+
+        lightbox.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow =
+            "";
+
+        lightboxImage.src =
+            "";
+    }
+
+
+    items.forEach(item => {
+
+        item.addEventListener(
+            "click",
+            () => {
+
+                const image =
+                    item.querySelector(
+                        "img"
+                    );
+
+                openGalleryImage(
+                    item.dataset.galleryImage,
+                    image?.alt || ""
+                );
+
+            }
+        );
+
+    });
+
+
+    closeButton.addEventListener(
+        "click",
+        closeGallery
+    );
+
+
+    lightbox.addEventListener(
+        "click",
+        event => {
+
+            /*
+             * Clicking the dark background
+             * closes the image.
+             */
+            if (
+                event.target ===
+                lightbox
+            ) {
+                closeGallery();
+            }
+
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape" &&
+                lightbox.classList.contains(
+                    "open"
+                )
+            ) {
+                closeGallery();
+            }
+
+        }
+    );
+
+}
+
+/* =========================================================
    INITIALIZATION
    ========================================================= */
 
@@ -631,6 +777,8 @@ document.addEventListener(
         setupMobileMenu();
 
         setupNavbarScroll();
+
+        setupGallery();
 
     }
 );
