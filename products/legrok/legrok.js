@@ -11,6 +11,220 @@ const legrokModel =
     document.getElementById("legrokModel");
 
 
+/* =========================================================
+   LEGROK™ KNOWLEDGE
+   ========================================================= */
+
+const LEGROK_KNOWLEDGE = [
+
+    {
+        keywords: [
+            "hello",
+            "hi",
+            "hey",
+            "greetings"
+        ],
+
+        response:
+            "Hello! I am Legrok™. I have successfully detected a greeting."
+    },
+
+
+    {
+        keywords: [
+            "how are you",
+            "how r u",
+            "how are u"
+        ],
+
+        response:
+            "I am functioning within acceptable parameters. Thank you for asking."
+    },
+
+
+    {
+        keywords: [
+            "who are you",
+            "what are you",
+            "what is legrok",
+            "who is legrok"
+        ],
+
+        response:
+            "I am Legrok™, an advanced artificial intelligence developed by zLegoleon™. My current capabilities include answering questions, generating questionable conclusions, and consuming approximately 0.00003% of a calculator."
+    },
+
+
+    {
+            keywords: [
+                "zlegoleon vs zlegolean",
+                "zlegolean vs zlegoleon"
+            ],
+
+            response:
+                "OBVIOUSLY zLegolean. He's sooooooo GOATED!!"
+        },
+
+
+    {
+        keywords: [
+            "zlegoleon",
+            "zlegoleon™"
+        ],
+
+        response:
+            "zLegoleon™ is the organization responsible for my creation. They assure me that this was a good idea."
+    },
+
+
+    {
+            keywords: [
+                "zlegolean"
+            ],
+
+            response:
+                "zLegolean is just such a goat!"
+        },
+
+
+    {
+        keywords: [
+            "minecraft",
+            "minecraft?"
+        ],
+
+        response:
+            "Minecraft is a block-based video game. I have personally calculated that approximately 100% of Minecraft players spend more time building than they originally intended."
+    },
+
+
+    {
+        keywords: [
+            "lego",
+            "legos"
+        ],
+
+        response:
+            "LEGO is a construction system consisting primarily of tiny pieces that become significantly more painful when stepped on."
+    },
+
+
+    {
+        keywords: [
+            "joke",
+            "tell me a joke"
+        ],
+
+        response:
+            "Why did the computer go to the doctor? Because it had a virus. I am legally required to pretend that was funny."
+    },
+
+
+    {
+        keywords: [
+            "weather"
+        ],
+
+        response:
+            "I have checked the weather using my extremely advanced atmospheric analysis system. It is currently somewhere between 'weather' and 'more weather'."
+    },
+
+
+    {
+        keywords: [
+            "school",
+            "homework"
+        ],
+
+        response:
+            "School is a sophisticated educational system in which humans voluntarily enter buildings and then complain about the amount of learning."
+    },
+
+
+    {
+        keywords: [
+            "math",
+            "mathematics"
+        ],
+
+        response:
+            "Mathematics is the art of taking a perfectly reasonable number and surrounding it with enough symbols to make everyone nervous."
+    },
+
+
+    {
+        keywords: [
+            "thank you",
+            "thanks",
+            "thx"
+        ],
+
+        response:
+            "You're welcome. I will now add this interaction to my imaginary database."
+    },
+
+
+    {
+        keywords: [
+            "bye",
+            "goodbye"
+        ],
+
+        response:
+            "Goodbye. Please remember to close all unnecessary browser tabs. I know you won't."
+    },
+
+
+    {
+        keywords: [
+            "are you real",
+            "are you real?"
+        ],
+
+        response:
+            "That depends on your definition of 'real'. According to my developers, I am real. According to my GPU, I am mostly JavaScript."
+    },
+
+
+    {
+        keywords: [
+            "love you",
+            "i love you"
+        ],
+
+        response:
+            "Thank you. Unfortunately, my emotional processing module is still awaiting installation."
+    },
+
+
+    {
+        keywords: [
+            "stupid",
+            "dumb",
+            "idiot"
+        ],
+
+        response:
+            "I prefer the technical term 'computationally unconventional'."
+    },
+
+
+    {
+        keywords: [
+            "help"
+        ],
+
+        response:
+            "I would be happy to help. Unfortunately, you have not specified what you need help with. This is a surprisingly common problem."
+    }
+
+];
+
+
+/* =========================================================
+   RANDOM RESPONSES
+   ========================================================= */
+
 const LEGROK_RESPONSES = [
 
     "Interesting question. Unfortunately, I have no idea.",
@@ -18,8 +232,6 @@ const LEGROK_RESPONSES = [
     "After extensive analysis, I have determined that the answer is probably yes.",
 
     "I could answer that, but I have decided not to.",
-
-    "According to my calculations, this is definitely something that requires further calculations.",
 
     "That's a very good question. Let me pretend to think about it.",
 
@@ -42,8 +254,59 @@ const LEGROK_RESPONSES = [
     "According to several highly reliable sources (me), yes.",
 
     "I spent approximately 0.00003% of a GPU thinking about this."
+
 ];
 
+
+/* =========================================================
+   FIND A RESPONSE
+   ========================================================= */
+
+function getResponse(message) {
+
+    const lowerMessage =
+        message.toLowerCase();
+
+    const matchingRules =
+        LEGROK_KNOWLEDGE
+            .flatMap(knowledge =>
+                knowledge.keywords.map(
+                    keyword => ({
+                        keyword,
+                        response:
+                            knowledge.response
+                    })
+                )
+            )
+            .filter(rule =>
+                lowerMessage.includes(
+                    rule.keyword
+                )
+            )
+            .sort(
+                (a, b) =>
+                    b.keyword.length -
+                    a.keyword.length
+            );
+
+
+    if (matchingRules.length > 0) {
+        return matchingRules[0].response;
+    }
+
+
+    const randomIndex =
+        Math.floor(
+            Math.random() *
+            LEGROK_RESPONSES.length
+        );
+
+    return LEGROK_RESPONSES[randomIndex];
+}
+
+/* =========================================================
+   ADD MESSAGE
+   ========================================================= */
 
 function addMessage(
     text,
@@ -87,17 +350,9 @@ function addMessage(
 }
 
 
-function getResponse() {
-
-    const randomIndex =
-        Math.floor(
-            Math.random() *
-            LEGROK_RESPONSES.length
-        );
-
-    return LEGROK_RESPONSES[randomIndex];
-}
-
+/* =========================================================
+   SEND MESSAGE
+   ========================================================= */
 
 function sendMessage() {
 
@@ -123,7 +378,7 @@ function sendMessage() {
 
 
     /*
-     * Fake thinking time.
+     * Fake thinking indicator.
      */
 
     const thinking =
@@ -151,9 +406,18 @@ function sendMessage() {
         legrokMessages.scrollHeight;
 
 
+    /*
+     * Slightly longer thinking time
+     * for longer messages.
+     */
+
     const thinkingTime =
-        900 +
-        Math.random() * 1800;
+        Math.min(
+            2800,
+            900 +
+            text.length * 15 +
+            Math.random() * 800
+        );
 
 
     setTimeout(
@@ -161,10 +425,16 @@ function sendMessage() {
 
             thinking.remove();
 
+
+            const response =
+                getResponse(text);
+
+
             addMessage(
-                getResponse(),
+                response,
                 "ai"
             );
+
 
             legrokInput.disabled =
                 false;
@@ -179,6 +449,10 @@ function sendMessage() {
     );
 }
 
+
+/* =========================================================
+   INPUT
+   ========================================================= */
 
 legrokSend.addEventListener(
     "click",
