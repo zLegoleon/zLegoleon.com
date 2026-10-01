@@ -59,8 +59,8 @@ const NAV_ITEMS = [
                 },
 
                 {
-                    label: "Coming soon",
-                    path: "products/coming-soon/"
+                    label: "Legrok",
+                    path: "products/legrok/"
                 }
             ]
         },

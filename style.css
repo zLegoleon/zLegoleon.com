@@ -2579,3 +2579,811 @@
 
 }
 
+/* =========================================================
+   LEGROK™
+   ========================================================= */
+
+
+.legrok-hero {
+
+    min-height:
+        calc(100vh - 70px);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    text-align:
+        center;
+
+    padding:
+        100px 25px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+}
+
+
+/*
+ * Subtle background glow.
+ */
+
+.legrok-hero::before {
+
+    content: "";
+
+    position:
+        absolute;
+
+    width:
+        600px;
+
+    height:
+        600px;
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle,
+            var(--accent-glow),
+            transparent 70%
+        );
+
+    top:
+        50%;
+
+    left:
+        50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    pointer-events:
+        none;
+}
+
+
+.legrok-hero-content {
+
+    max-width:
+        800px;
+
+    position:
+        relative;
+
+    z-index:
+        1;
+}
+
+
+.legrok-hero h1 {
+
+    font-size:
+        clamp(5rem, 14vw, 10rem);
+
+    line-height:
+        0.85;
+
+    letter-spacing:
+        -0.07em;
+
+    margin:
+        15px 0 25px;
+}
+
+
+.legrok-tagline {
+
+    font-size:
+        clamp(1.4rem, 3vw, 2rem);
+
+    font-weight:
+        600;
+
+    margin:
+        0 0 25px;
+}
+
+
+.legrok-description {
+
+    max-width:
+        620px;
+
+    margin:
+        0 auto;
+
+    color:
+        var(--muted);
+
+    line-height:
+        1.7;
+
+    font-size:
+        1.05rem;
+}
+
+
+.legrok-status {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    margin-top:
+        35px;
+
+    padding:
+        9px 15px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        999px;
+
+    background:
+        var(--surface);
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.85rem;
+}
+
+
+.legrok-status-dot {
+
+    width:
+        8px;
+
+    height:
+        8px;
+
+    border-radius:
+        50%;
+
+    background:
+        #22c55e;
+
+    box-shadow:
+        0 0 10px
+        rgba(34, 197, 94, 0.5);
+
+    animation:
+        legrokPulse 2s ease-in-out infinite;
+}
+
+
+@keyframes legrokPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+}
+
+
+/* =========================================================
+   MODEL CARDS
+   ========================================================= */
+
+
+.legrok-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap:
+        15px;
+}
+
+
+.legrok-card {
+
+    padding:
+        25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-medium);
+
+    background:
+        var(--surface);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.legrok-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(239, 68, 68, 0.4);
+}
+
+
+.legrok-card-label {
+
+    display:
+        block;
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.75rem;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.08em;
+
+    margin-bottom:
+        15px;
+}
+
+
+.legrok-card strong {
+
+    display:
+        block;
+
+    font-size:
+        1.7rem;
+
+    margin-bottom:
+        8px;
+}
+
+
+.legrok-card p {
+
+    margin:
+        0;
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.85rem;
+
+    line-height:
+        1.5;
+}
+
+
+/* =========================================================
+   CHAT
+   ========================================================= */
+
+
+.legrok-chat-section {
+
+    max-width:
+        900px;
+
+    margin:
+        0 auto;
+}
+
+
+.legrok-chat {
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-medium);
+
+    overflow:
+        hidden;
+
+    background:
+        var(--surface);
+
+    box-shadow:
+        0 20px 60px
+        rgba(0, 0, 0, 0.18);
+}
+
+
+.legrok-chat-header {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        18px 20px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+
+.legrok-chat-header strong {
+
+    display:
+        block;
+}
+
+
+.legrok-chat-header span {
+
+    display:
+        block;
+
+    margin-top:
+        3px;
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.75rem;
+}
+
+
+#legrokModel {
+
+    appearance:
+        none;
+
+    -webkit-appearance:
+        none;
+
+    padding:
+        8px 30px 8px 10px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        7px;
+
+    background:
+        var(--surface-light);
+
+    color:
+        var(--text);
+
+    font:
+        inherit;
+
+    font-size:
+        0.8rem;
+
+    cursor:
+        pointer;
+}
+
+
+.legrok-messages {
+
+    height:
+        430px;
+
+    overflow-y:
+        auto;
+
+    padding:
+        25px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        20px;
+}
+
+
+.legrok-message {
+
+    max-width:
+        75%;
+
+    padding:
+        14px 17px;
+
+    border-radius:
+        12px;
+
+    line-height:
+        1.6;
+}
+
+
+.legrok-message p {
+
+    margin:
+        0;
+
+    font-size:
+        0.95rem;
+}
+
+
+.legrok-message-name {
+
+    margin-bottom:
+        5px;
+
+    font-size:
+        0.72rem;
+
+    font-weight:
+        600;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.06em;
+
+    opacity:
+        0.7;
+}
+
+
+.legrok-message-ai {
+
+    align-self:
+        flex-start;
+
+    background:
+        var(--surface-light);
+
+    border:
+        1px solid var(--border);
+}
+
+
+.legrok-message-user {
+
+    align-self:
+        flex-end;
+
+    background:
+        var(--accent);
+
+    color:
+        white;
+}
+
+
+.legrok-input-area {
+
+    display:
+        flex;
+
+    gap:
+        10px;
+
+    padding:
+        15px;
+
+    border-top:
+        1px solid var(--border);
+}
+
+
+#legrokInput {
+
+    flex:
+        1;
+
+    min-width:
+        0;
+
+    padding:
+        12px 14px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        8px;
+
+    background:
+        var(--background);
+
+    color:
+        var(--text);
+
+    font:
+        inherit;
+
+    outline:
+        none;
+}
+
+
+#legrokInput:focus {
+
+    border-color:
+        var(--accent);
+}
+
+
+#legrokSend {
+
+    padding:
+        0 20px;
+
+    border:
+        0;
+
+    border-radius:
+        8px;
+
+    background:
+        var(--accent);
+
+    color:
+        white;
+
+    font:
+        inherit;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+#legrokSend:hover {
+
+    background:
+        var(--accent-light);
+
+    transform:
+        translateY(-1px);
+}
+
+
+#legrokSend:disabled {
+
+    opacity:
+        0.5;
+
+    cursor:
+        default;
+
+    transform:
+        none;
+}
+
+
+/* =========================================================
+   THINKING ANIMATION
+   ========================================================= */
+
+
+.thinking-dots {
+
+    display:
+        inline-block;
+
+    width:
+        20px;
+
+    overflow:
+        hidden;
+
+    vertical-align:
+        bottom;
+
+    animation:
+        legrokDots 1.2s steps(4, end) infinite;
+}
+
+
+@keyframes legrokDots {
+
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 20px;
+    }
+
+}
+
+
+/* =========================================================
+   DISCLAIMER
+   ========================================================= */
+
+
+.legrok-disclaimer {
+
+    max-width:
+        750px;
+
+    margin:
+        0 auto;
+
+    padding:
+        40px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-medium);
+
+    background:
+        var(--surface);
+}
+
+
+.legrok-disclaimer h2 {
+
+    margin:
+        10px 0 15px;
+
+    font-size:
+        clamp(1.6rem, 4vw, 2.4rem);
+
+    letter-spacing:
+        -0.03em;
+}
+
+
+.legrok-disclaimer p:not(.eyebrow) {
+
+    color:
+        var(--muted);
+
+    line-height:
+        1.7;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+
+@media (max-width: 800px) {
+
+    .legrok-hero {
+        min-height:
+            calc(100vh - 62px);
+    }
+
+
+    .legrok-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .legrok-message {
+
+        max-width:
+            88%;
+
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .legrok-hero h1 {
+        font-size:
+            5rem;
+    }
+
+
+    .legrok-description {
+        font-size:
+            0.95rem;
+    }
+
+
+    .legrok-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .legrok-chat-header {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+    }
+
+
+    #legrokModel {
+        width:
+            100%;
+    }
+
+
+    .legrok-messages {
+        height:
+            380px;
+
+        padding:
+            18px;
+    }
+
+
+    .legrok-input-area {
+        padding:
+            10px;
+    }
+
+
+    #legrokSend {
+        padding:
+            0 15px;
+    }
+
+
+    .legrok-disclaimer {
+        padding:
+            25px;
+    }
+
+}
+
