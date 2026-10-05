@@ -39,7 +39,7 @@ const PRODUCTS = {
         category: "Plushies",
 
         description:
-            "A soft, completely unnecessary physical representation of the zLegoleon™ brand. Perfect for shelves, desks, beds, or questioning your financial decisions."
+            "A physical representation of the goat, zLegolean. Perfect for shelves, desks, beds, or questioning your financial decisions."
 
     },
 
