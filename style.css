@@ -3807,3 +3807,479 @@
 
 }
 
+/* =========================================================
+   404 ERROR PAGE
+   ========================================================= */
+
+
+.error-page {
+
+    min-height:
+        calc(100vh - 70px);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        80px 25px;
+
+    text-align:
+        center;
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+}
+
+
+/*
+ * Very subtle red glow behind the error.
+ */
+
+.error-page::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        550px;
+
+    height:
+        550px;
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle,
+            var(--accent-glow),
+            transparent 70%
+        );
+
+    top:
+        50%;
+
+    left:
+        50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    pointer-events:
+        none;
+
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+
+.error-content {
+
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    width:
+        100%;
+
+    max-width:
+        700px;
+
+}
+
+
+.error-content h1 {
+
+    margin:
+        10px 0 5px;
+
+    font-size:
+        clamp(
+            7rem,
+            20vw,
+            13rem
+        );
+
+    line-height:
+        0.85;
+
+    letter-spacing:
+        -0.08em;
+
+}
+
+
+.error-content h2 {
+
+    margin:
+        25px 0 15px;
+
+    font-size:
+        clamp(
+            1.5rem,
+            4vw,
+            2.2rem
+        );
+
+    letter-spacing:
+        -0.03em;
+
+}
+
+
+.error-description {
+
+    max-width:
+        540px;
+
+    margin:
+        0 auto;
+
+    color:
+        var(--muted);
+
+    line-height:
+        1.7;
+
+}
+
+
+/* =========================================================
+   ERROR BOX
+   ========================================================= */
+
+
+.error-box {
+
+    margin:
+        35px auto 0;
+
+    max-width:
+        550px;
+
+    padding:
+        20px;
+
+    text-align:
+        left;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-medium);
+
+    background:
+        var(--surface);
+
+}
+
+
+.error-box-status {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    font-size:
+        0.8rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.error-dot {
+
+    width:
+        8px;
+
+    height:
+        8px;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--accent);
+
+    box-shadow:
+        0 0 10px
+        var(--accent-glow);
+
+}
+
+
+.error-box p {
+
+    margin:
+        15px 0;
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.9rem;
+
+    line-height:
+        1.6;
+
+}
+
+
+.error-code {
+
+    display:
+        block;
+
+    padding-top:
+        12px;
+
+    border-top:
+        1px solid var(--border);
+
+    color:
+        var(--muted);
+
+    font-family:
+        monospace;
+
+    font-size:
+        0.7rem;
+
+    letter-spacing:
+        0.05em;
+
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+
+.error-actions {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    gap:
+        10px;
+
+    margin-top:
+        25px;
+
+}
+
+
+.error-button {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    min-height:
+        42px;
+
+    padding:
+        0 18px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-small);
+
+    background:
+        var(--surface);
+
+    color:
+        var(--text);
+
+    font:
+        inherit;
+
+    font-size:
+        0.9rem;
+
+    text-decoration:
+        none;
+
+    cursor:
+        pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+
+}
+
+
+.error-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+        var(--surface-light);
+
+    border-color:
+        var(--accent);
+
+}
+
+
+.error-button-primary {
+
+    background:
+        var(--accent);
+
+    border-color:
+        var(--accent);
+
+    color:
+        white;
+
+}
+
+
+.error-button-primary:hover {
+
+    background:
+        var(--accent-light);
+
+    border-color:
+        var(--accent-light);
+
+}
+
+
+/* =========================================================
+   LEGROK MESSAGE
+   ========================================================= */
+
+
+.error-legrok {
+
+    margin:
+        35px auto 0;
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.8rem;
+
+    font-style:
+        italic;
+
+}
+
+
+.error-legrok span {
+
+    color:
+        var(--text);
+
+    font-style:
+        normal;
+
+    font-weight:
+        600;
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+
+@media (max-width: 800px) {
+
+    .error-page {
+
+        min-height:
+            calc(100vh - 62px);
+
+        padding:
+            60px 20px;
+
+    }
+
+
+    .error-content h1 {
+
+        font-size:
+            7rem;
+
+    }
+
+
+    .error-box {
+
+        padding:
+            17px;
+
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .error-actions {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .error-button {
+
+        width:
+            100%;
+
+    }
+
+}
+

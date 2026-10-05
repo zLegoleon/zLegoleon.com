@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>404 — zLegoleon™</title>
+
+    <link
+            rel="stylesheet"
+            href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+<div id="site-nav"></div>
+
+
+<main class="error-page">
+
+    <div class="error-content">
+
+        <p class="eyebrow">
+            zLegoleon™ Error Department
+        </p>
+
+        <h1>
+            404
+        </h1>
+
+        <h2>
+            This page does not exist.
+        </h2>
+
+        <p class="error-description">
+            We searched everywhere we could think of.
+            Unfortunately, this page appears to have
+            either never existed or escaped our servers.
+        </p>
+
+
+        <div class="error-box">
+
+            <div class="error-box-status">
+                <span class="error-dot"></span>
+
+                <span>
+                    Page status: Missing
+                </span>
+            </div>
+
+            <p>
+                Our highly advanced diagnostic system
+                has concluded that the requested URL
+                is probably somewhere else.
+            </p>
+
+            <span class="error-code">
+                ERROR_CODE: PAGE_NOT_FOUND_404
+            </span>
+
+        </div>
+
+
+        <div class="error-actions">
+
+            <a
+                    href="./"
+                    class="error-button error-button-primary"
+            >
+                Back to Home
+            </a>
+
+            <button
+                    type="button"
+                    class="error-button"
+                    id="errorBackButton"
+            >
+                Go Back
+            </button>
+
+        </div>
+
+
+        <p class="error-legrok">
+
+            <span>Legrok™ says:</span>
+
+            "I have analyzed this situation.
+            There is no page here."
+
+        </p>
+
+    </div>
+
+</main>
+
+
+<div id="site-footer"></div>
+
+
+<script src="script.js"></script>
+
+
+<script>
+
+    const backButton =
+        document.getElementById(
+            "errorBackButton"
+        );
+
+
+    backButton.addEventListener(
+        "click",
+        () => {
+
+            if (
+                document.referrer
+            ) {
+
+                history.back();
+
+            }
+            else {
+
+                window.location.href =
+                    "./";
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
