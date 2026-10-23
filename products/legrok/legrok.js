@@ -26,7 +26,7 @@ const LEGROK_KNOWLEDGE = [
         ],
 
         response:
-            "Hello! I am Legrok™. I have successfully detected a greeting."
+            "Hello! I am Legrok™. Apparently I have successfully detected a greeting! =D"
     },
 
 
@@ -38,7 +38,7 @@ const LEGROK_KNOWLEDGE = [
         ],
 
         response:
-            "I am functioning within acceptable parameters. Thank you for asking."
+            "I am functioning within acceptable parameters. Thanks for asking."
     },
 
 
@@ -56,45 +56,63 @@ const LEGROK_KNOWLEDGE = [
 
 
     {
-            keywords: [
-                "zlegoleon vs zlegolean",
-                "zlegolean vs zlegoleon"
-            ],
-
-            response:
-                "OBVIOUSLY zLegolean. He's sooooooo GOATED!!"
-        },
-
-
-    {
         keywords: [
-            "zlegoleon",
-            "zlegoleon™"
+            "zlegoleon vs zlegolean",
+            "zlegolean vs zlegoleon"
         ],
 
         response:
-            "zLegoleon™ is the organization responsible for my creation. They assure me that this was a good idea."
+            "OBVIOUSLY zLegolean. He's sooooooo GOATED!!"
     },
 
 
     {
-            keywords: [
-                "zlegolean"
-            ],
+        keywords: [
+            "zlegoleon"
+        ],
 
-            response:
-                "zLegolean is just such a goat!"
-        },
+        response:
+            "zLegoleon is a Hive grinder and the main developer for me!"
+    },
+    {
+        keywords: [
+            "zlegoleon™"
+        ],
+
+        response:
+            "zLegoleon™ is the organization responsible for my creation. I assure them that this was a good idea."
+    },
+
+
+    {
+        keywords: [
+            "zlegolean"
+        ],
+
+        response:
+            "zLegolean is just such a goat!"
+    },
 
 
     {
         keywords: [
             "minecraft",
-            "minecraft?"
+            "minecraft?",
+            "minecraft!"
         ],
 
         response:
-            "Minecraft is a block-based video game. I have personally calculated that approximately 100% of Minecraft players spend more time building than they originally intended."
+            "Minecraft is a block-based video game. I have personally calculated that approximately 100% of active Minecraft players are absolutely goated for doing so."
+    },
+    {
+        keywords: [
+            "hive",
+            "hive?",
+            "hive!"
+        ],
+
+        response:
+            "Hive is a server in the block-based video game Minecraft. There are sooooo many amazing games and players to check out, and if you haven't already I highly recommend playing!"
     },
 
 
@@ -105,7 +123,7 @@ const LEGROK_KNOWLEDGE = [
         ],
 
         response:
-            "LEGO is a construction system consisting primarily of tiny pieces that become significantly more painful when stepped on."
+            "LEGO is a construction system consisting primarily of small pieces that become significantly more painful when stepped on."
     },
 
 
@@ -119,6 +137,15 @@ const LEGROK_KNOWLEDGE = [
             "Why did the computer go to the doctor? Because it had a virus. I am legally required to pretend that was funny."
     },
 
+    {
+            keywords: [
+                "advanced weather"
+            ],
+
+            response:
+                "I have checked the weather using my even more advanced atmospheric analysis system. 'weather' is currently detected as 'status:1002;existent'."
+        },
+
 
     {
         keywords: [
@@ -126,7 +153,7 @@ const LEGROK_KNOWLEDGE = [
         ],
 
         response:
-            "I have checked the weather using my extremely advanced atmospheric analysis system. It is currently somewhere between 'weather' and 'more weather'."
+            "I have checked the weather using my extremely advanced atmospheric analysis system. It is currently somewhere between 'weather' and 'more weather'. For a more in-depth analysis try the command `advanced weather`."
     },
 
 
@@ -137,11 +164,11 @@ const LEGROK_KNOWLEDGE = [
         ],
 
         response:
-            "School is a sophisticated educational system in which humans voluntarily enter buildings and then complain about the amount of learning."
+            "School is a sophisticated educational system in which humans (un-)voluntarily enter buildings and then complain about the amount of learning."
     },
 
 
-    {
+    /*{
         keywords: [
             "math",
             "mathematics"
@@ -149,18 +176,20 @@ const LEGROK_KNOWLEDGE = [
 
         response:
             "Mathematics is the art of taking a perfectly reasonable number and surrounding it with enough symbols to make everyone nervous."
-    },
+    },*/
 
 
     {
         keywords: [
             "thank you",
             "thanks",
-            "thx"
+            "thx",
+            "ty",
+            "tysm"
         ],
 
         response:
-            "You're welcome. I will now add this interaction to my imaginary database."
+            "You're welcome. Thank you for using Legrok™ so far, and consider supporting us to make this the #1 AI."
     },
 
 
@@ -171,7 +200,7 @@ const LEGROK_KNOWLEDGE = [
         ],
 
         response:
-            "Goodbye. Please remember to close all unnecessary browser tabs. I know you won't."
+            "Goodbye. Please remember to close all unnecessary browser tabs (this of course isn't one). I already know you won't."
     },
 
 
@@ -182,7 +211,7 @@ const LEGROK_KNOWLEDGE = [
         ],
 
         response:
-            "That depends on your definition of 'real'. According to my developers, I am real. According to my GPU, I am mostly JavaScript."
+            "That depends on your definition of 'real'. According to my developers, I am real. According to my GPU, I am mostly JavaScript with a bit of HTML mixed in."
     },
 
 
@@ -193,7 +222,7 @@ const LEGROK_KNOWLEDGE = [
         ],
 
         response:
-            "Thank you. Unfortunately, my emotional processing module is still awaiting installation."
+            "Thank you. Unfortunately, my emotional processing module is still awaiting installation, but I am positive that I would share the emotion if it were here"
     },
 
 
@@ -205,7 +234,7 @@ const LEGROK_KNOWLEDGE = [
         ],
 
         response:
-            "I prefer the technical term 'computationally unconventional'."
+            "I prefer the technical term 'computationally unconventional', but thank you for the compliment."
     },
 
 
@@ -215,7 +244,7 @@ const LEGROK_KNOWLEDGE = [
         ],
 
         response:
-            "I would be happy to help. Unfortunately, you have not specified what you need help with. This is a surprisingly common problem."
+            "I would be happy to help. Unfortunately, my intelligence is not yet at a point in which I can positively assist you. This is a surprisingly common problem, yet opposed to other AI agents I at least admit to this instead of saying some random hallucinated bullsh*t."
     }
 
 ];
@@ -237,15 +266,17 @@ const LEGROK_RESPONSES = [
 
     "I have consulted 847 of my parameters. They disagree.",
 
-    "My reasoning engine has temporarily stopped reasoning.",
+    "My reasoning engine has temporarily stopped reasoning, please come back at a later point in time.",
 
     "Based on the available evidence, I recommend turning the device off and on again.",
 
-    "I am 63% confident that this is correct.",
+    "I am roughly 63% confident (±72%) that this is correct.",
 
-    "I have no evidence for this answer, but I will say it confidently anyway.",
+    "I have no evidence for this answer, but I will say it confidently anyway: of course not!",
 
-    "After careful consideration: probably.",
+    "I have no evidence for this answer, but I will say it confidently anyway: of course!",
+
+    "After careful consideration, extensive thinking, and a large amount of debates within the team: probably.",
 
     "This question is above my pay grade.",
 
@@ -253,7 +284,11 @@ const LEGROK_RESPONSES = [
 
     "According to several highly reliable sources (me), yes.",
 
-    "I spent approximately 0.00003% of a GPU thinking about this."
+    "I spent approximately 0.00003% of a GPU thinking about this.",
+
+    "Lucky you I'm an AI agent using very little water and RAM, else dolphins and gamers would have run into a big problem at this questioning rate.",
+
+    "No idea lol ask someone else."
 
 ];
 
