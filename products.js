@@ -34,7 +34,7 @@ const PRODUCTS = {
 
         price: 24.99,
 
-        image: "images/plushies/zLegolean.png",
+        image: "images/plushies/zlegolean.png",
 
         category: "Plushies",
 
@@ -56,7 +56,7 @@ const PRODUCTS = {
 
         price: 19.99,
 
-        image: "images/plushies/zLegoleon.png",
+        image: "images/plushies/zlegoleon.png",
 
         category: "Plushies",
 
